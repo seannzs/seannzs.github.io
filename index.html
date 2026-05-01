@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sean | Digital Presence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'sea-blue': '#0066FF',
+                        'neon-purple': '#A855F7',
+                        'deep-navy': '#020617',
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { 
+            background-color: #020617;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Animated Mesh Background */
+        .mesh-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+            filter: blur(100px);
+            pointer-events: none;
+        }
+        .mesh-1 {
+            position: absolute; top: -10%; right: -10%;
+            width: 50%; height: 50%;
+            background: radial-gradient(circle, #0066FF 0%, transparent 70%);
+        }
+        .mesh-2 {
+            position: absolute; bottom: -10%; left: -10%;
+            width: 50%; height: 50%;
+            background: radial-gradient(circle, #A855F7 0%, transparent 70%);
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .glass:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .name-gradient {
+            background: linear-gradient(135deg, #00D1FF 0%, #A855F7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .reveal { opacity: 0; transform: translateY(20px); }
+    </style>
+</head>
+<body class="font-sans">
+
+    <div class="mesh-bg">
+        <div class="mesh-1"></div>
+        <div class="mesh-2"></div>
+    </div>
+
+    <main class="min-h-screen flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-[400px] w-full text-center space-y-12">
+            
+            <!-- Profile Section -->
+            <div class="flex justify-center reveal">
+                <div class="relative group">
+                    <div class="w-32 h-32 rounded-[40px] bg-gradient-to-tr from-sea-blue to-neon-purple p-[3px] shadow-2xl">
+                        <div class="w-full h-full rounded-[37px] bg-deep-navy overflow-hidden">
+                            <!-- Placeholder Image -->
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sean&backgroundColor=020617" alt="Sean" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-2 -right-2 bg-sea-blue p-2 rounded-xl shadow-lg">
+                        <i data-lucide="verified" class="w-5 h-5 text-white"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Header -->
+            <div class="space-y-2 reveal">
+                <h1 class="text-5xl font-display font-extrabold tracking-tighter name-gradient uppercase">SEAN</h1>
+                <p class="text-slate-400 font-bold tracking-[0.3em] text-[12px] uppercase">Bot Developer • UI Enthusiast</p>
+            </div>
+
+            <!-- Links -->
+            <div class="grid gap-4 w-full reveal">
+                <a href="#" class="glass p-5 rounded-[2rem] flex items-center justify-between group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-400">
+                            <i data-lucide="layout" class="w-5 h-5"></i>
+                        </div>
+                        <span class="font-bold text-sm tracking-wide uppercase">Projects</span>
+                    </div>
+                    <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-500 group-hover:text-white transition-colors"></i>
+                </a>
+
+                <a href="#" class="glass p-5 rounded-[2rem] flex items-center justify-between group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-400">
+                            <i data-lucide="github" class="w-5 h-5"></i>
+                        </div>
+                        <span class="font-bold text-sm tracking-wide uppercase">Repositories</span>
+                    </div>
+                    <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-500 group-hover:text-white transition-colors"></i>
+                </a>
+
+                <a href="#" class="glass p-5 rounded-[2rem] flex items-center justify-between group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-2xl bg-cyan-500/10 flex items-center justify-center text-cyan-400">
+                            <i data-lucide="message-square" class="w-5 h-5"></i>
+                        </div>
+                        <span class="font-bold text-sm tracking-wide uppercase">Discord Server</span>
+                    </div>
+                    <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-500 group-hover:text-white transition-colors"></i>
+                </a>
+            </div>
+
+            <!-- AI Message Section -->
+            <div class="space-y-4 reveal">
+                <div class="text-left px-4">
+                    <span class="text-[10px] font-black text-sea-blue uppercase tracking-widest">Connect with AI</span>
+                </div>
+                <div class="glass p-2 rounded-[2.5rem] flex items-center">
+                    <input type="text" placeholder="Tanya sesuatu..." class="bg-transparent flex-1 pl-6 text-sm font-medium outline-none border-none focus:ring-0">
+                    <button class="bg-sea-blue hover:bg-blue-600 w-12 h-12 rounded-full flex items-center justify-center transition-all active:scale-90">
+                        <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="py-10 text-center opacity-30 text-[10px] font-bold tracking-[0.5em] uppercase reveal">
+        © 2026 Sean Mahesa • Nexsus Play
+    </footer>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Animations
+        window.addEventListener('DOMContentLoaded', () => {
+            gsap.to(".reveal", {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                stagger: 0.2,
+                ease: "power4.out"
+            });
+        });
+
+        // Simple Hover Interaction for Profile
+        const profile = document.querySelector('.group');
+        profile.addEventListener('mouseenter', () => {
+            gsap.to(profile, { scale: 1.05, duration: 0.4 });
+        });
+        profile.addEventListener('mouseleave', () => {
+            gsap.to(profile, { scale: 1, duration: 0.4 });
+        });
+    </script>
+</body>
+</html>
