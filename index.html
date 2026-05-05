@@ -4,21 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile | Sean</title>
-    <!-- Library Eksternal -->
+
+    <!-- Library -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
     <style>
         body { 
-            background-color: #020617;
+            background: radial-gradient(circle at top, #0f172a, #020617 60%);
             color: #ffffff;
             font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
         }
 
-        /* Splash Screen / Loader */
+        /* Glow Background */
+        body::before, body::after {
+            content: "";
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            filter: blur(200px);
+            opacity: 0.2;
+            z-index: -1;
+        }
+        body::before {
+            top: -200px;
+            left: -200px;
+            background: #3b82f6;
+        }
+        body::after {
+            bottom: -200px;
+            right: -200px;
+            background: #a855f7;
+        }
+
+        /* Loader */
         #loader {
             position: fixed;
             inset: 0;
@@ -35,292 +59,194 @@
             height: 2px;
             background: rgba(255,255,255,0.1);
             margin-top: 20px;
-            position: relative;
             overflow: hidden;
         }
 
         .load-progress {
-            position: absolute;
             height: 100%;
             width: 0%;
             background: #3b82f6;
         }
 
-        /* Glassmorphism */
+        /* Glass */
         .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.08);
             transition: all 0.3s ease;
         }
         .glass:hover {
-            background: rgba(255, 255, 255, 0.07);
-            transform: translateY(-5px);
+            transform: translateY(-6px);
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
         }
 
+        /* Avatar Glow */
+        .profile-glow {
+            box-shadow: 0 0 40px rgba(59,130,246,0.5),
+                        0 0 80px rgba(168,85,247,0.3);
+        }
+
+        /* Gradient Text */
         .name-gradient {
-            background: linear-gradient(135deg, #3b82f6 0%, #a855f7 100%);
+            background: linear-gradient(135deg, #60a5fa, #c084fc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .reveal { opacity: 0; transform: translateY(20px); }
-        
-        /* Toast Animation */
+
+        /* Input */
+        input, textarea {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        input:focus, textarea:focus {
+            border: 1px solid rgba(59,130,246,0.6);
+            box-shadow: 0 0 15px rgba(59,130,246,0.2);
+        }
+
+        /* Button */
+        #btn-submit {
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+            box-shadow: 0 10px 30px rgba(59,130,246,0.3);
+        }
+        #btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(59,130,246,0.5);
+        }
+
+        /* Toast */
         .toast {
             position: fixed;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
             z-index: 10000;
-            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: 0.4s;
         }
-        .toast.active { transform: translateX(-50%) translateY(0); }
-
-        /* Airplane Animation */
-        @keyframes flyAway {
-            0% { transform: translate(0,0) rotate(0); opacity: 1; }
-            20% { transform: translate(-10px, 10px) rotate(-10deg); }
-            100% { transform: translate(200px, -200px) rotate(15deg); opacity: 0; }
+        .toast.active {
+            transform: translateX(-50%) translateY(0);
         }
-        .animate-fly { animation: flyAway 0.8s ease-in forwards; }
     </style>
 </head>
+
 <body>
 
-    <!-- Notifikasi Toast -->
-    <div id="toast" class="toast flex items-center gap-3 px-6 py-4 rounded-2xl glass border-blue-500/30 shadow-2xl">
-        <div id="toast-icon-bg" class="w-8 h-8 rounded-full flex items-center justify-center bg-blue-500/20">
-            <i id="toast-icon" data-lucide="info" class="w-4 h-4 text-blue-400"></i>
-        </div>
-        <p id="toast-msg" class="text-xs font-bold uppercase tracking-wider text-white">Notifikasi</p>
-    </div>
+<!-- Toast -->
+<div id="toast" class="toast glass px-6 py-3 rounded-xl text-xs font-bold"></div>
 
-    <!-- Loader -->
-    <div id="loader">
-        <h2 class="text-2xl font-bold tracking-[0.4em] name-gradient uppercase">SEAN</h2>
-        <div class="load-bar"><div class="load-progress" id="progress"></div></div>
-    </div>
+<!-- Loader -->
+<div id="loader">
+    <h2 class="text-2xl font-bold name-gradient">SEAN</h2>
+    <div class="load-bar"><div id="progress" class="load-progress"></div></div>
+</div>
 
-    <!-- Main Content -->
-    <main class="min-h-screen flex flex-col items-center py-20 px-6">
-        <div class="max-w-[400px] w-full space-y-10 text-center">
-            
-            <!-- Profil -->
-            <div class="flex justify-center reveal">
-                <div class="w-28 h-28 rounded-[35px] bg-gradient-to-tr from-blue-500 to-purple-600 p-[2px]">
-                    <div class="w-full h-full rounded-[33px] bg-slate-950 overflow-hidden shadow-2xl">
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sean" alt="Sean Profil">
-                    </div>
+<!-- Main -->
+<main class="min-h-screen flex items-center justify-center px-4">
+    <div class="w-full max-w-md space-y-8 text-center">
+
+        <!-- Avatar -->
+        <div class="flex justify-center reveal">
+            <div class="w-28 h-28 rounded-3xl p-[2px] bg-gradient-to-tr from-blue-500 to-purple-600">
+                <div class="w-full h-full rounded-3xl bg-slate-950 overflow-hidden profile-glow">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sean">
                 </div>
             </div>
-
-            <!-- Nama & Bio -->
-            <div class="space-y-2 reveal">
-                <h1 class="text-4xl font-extrabold tracking-tighter name-gradient uppercase">SEAN</h1>
-                <p class="text-slate-400 text-[10px] font-bold tracking-[0.3em] uppercase">Seannz • </p>
-            </div>
-
-            <!-- Tombol Sosial Media -->
-            <div class="grid gap-3 w-full">
-                <!-- WhatsApp (Contoh Link Setting) -->
-                <a href="#" onclick="checkLink(event, this)" class="reveal glass p-4 rounded-3xl flex items-center justify-between group">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-[#25D366]/10 flex items-center justify-center">
-                            <img src="https://cdn.simpleicons.org/whatsapp/25D366" class="w-5 h-5" alt="WA">
-                        </div>
-                        <span class="text-xs font-bold tracking-widest uppercase">WhatsApp</span>
-                    </div>
-                    <i data-lucide="chevron-right" class="w-4 h-4 opacity-20 group-hover:opacity-100 transition-all group-hover:translate-x-1"></i>
-                </a>
-
-                <!-- Instagram (Contoh Link Belum Setting) -->
-                <a href="#" onclick="checkLink(event, this)" class="reveal glass p-4 rounded-3xl flex items-center justify-between group">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-[#E4405F]/10 flex items-center justify-center">
-                            <img src="https://cdn.simpleicons.org/instagram/E4405F" class="w-5 h-5" alt="IG">
-                        </div>
-                        <span class="text-xs font-bold tracking-widest uppercase text-slate-300">Instagram</span>
-                    </div>
-                    <i data-lucide="lock" class="w-4 h-4 opacity-20"></i>
-                </a>
-
-                <!-- TikTok -->
-                <a href="#" onclick="checkLink(event, this)" class="reveal glass p-4 rounded-3xl flex items-center justify-between group">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
-                            <img src="https://cdn.simpleicons.org/tiktok/ffffff" class="w-5 h-5" alt="TikTok">
-                        </div>
-                        <span class="text-xs font-bold tracking-widest uppercase text-slate-300">TikTok</span>
-                    </div>
-                    <i data-lucide="lock" class="w-4 h-4 opacity-20"></i>
-                </a>
-
-                <!-- Discord -->
-                <a href="https://discord.gg/jRkcCFdT4T" onclick="checkLink(event, this)" class="reveal glass p-4 rounded-3xl flex items-center justify-between group">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-[#5865F2]/10 flex items-center justify-center">
-                            <img src="https://cdn.simpleicons.org/discord/5865F2" class="w-5 h-5" alt="Discord">
-                        </div>
-                        <span class="text-xs font-bold tracking-widest uppercase text-slate-300">Discord</span>
-                    </div>
-                    <i data-lucide="lock" class="w-4 h-4 opacity-20"></i>
-                </a>
-            </div>
-
-            <!-- Form Pesan -->
-            <div class="pt-6 space-y-4 reveal">
-                <div class="text-left px-2 flex justify-between items-center">
-                    <h3 class="text-[10px] font-black text-blue-500 uppercase tracking-widest">direct contact</h3>
-                    <span class="text-[8px] opacity-30 font-bold uppercase tracking-widest">send messages</span>
-                </div>
-                <form id="contactForm" class="space-y-3">
-                    <input type="text" id="name" placeholder="ENTER SENDER NAME" 
-                        class="w-full glass p-4 rounded-2xl outline-none text-xs font-bold uppercase focus:border-blue-500/50 transition-all">
-                    <textarea id="message" placeholder="WRITE YOUR MESSAGE...." rows="3"
-                        class="w-full glass p-4 rounded-2xl outline-none text-xs font-bold uppercase focus:border-blue-500/50 resize-none transition-all"></textarea>
-                    
-                    <button type="submit" id="btn-submit"
-                        class="w-full bg-blue-600 hover:bg-blue-700 py-4 rounded-2xl flex items-center justify-center gap-3 transition-all active:scale-95 shadow-xl shadow-blue-600/10">
-                        <span id="btn-text" class="text-[11px] font-black tracking-widest uppercase">Kirim Pesan</span>
-                        <div id="icon-container">
-                            <i id="send-icon" data-lucide="send" class="w-4 h-4"></i>
-                        </div>
-                    </button>
-                </form>
-            </div>
-
-            <footer class="opacity-20 text-[9px] font-bold tracking-[0.4em] uppercase pt-10">
-                © 2026 Sean • 
-            </footer>
         </div>
-    </main>
 
-    <script>
-        // --- KONFIGURASI ---
-        const WEBHOOK_URL = "https://discord.com/api/webhooks/1499414369795047517/Ciwe2keizGMWb33cLCJzl9yxFJYiLFM3-5aQiSkj73tlFlLdYYFs-jKs2p5GVj01rQCX"; 
+        <!-- Nama -->
+        <div class="reveal">
+            <h1 class="text-4xl font-extrabold name-gradient">SEAN</h1>
+            <p class="text-xs text-slate-400">Seannz</p>
+        </div>
 
-        lucide.createIcons();
+        <!-- Sosial -->
+        <div class="space-y-3">
+            <a href="#" onclick="checkLink(event,this)" class="glass p-4 rounded-2xl flex justify-between reveal">
+                <span>WhatsApp</span>
+                <i data-lucide="chevron-right"></i>
+            </a>
 
-        // 1. Loading Logic
-        window.addEventListener('load', () => {
-            gsap.to("#progress", {
-                width: "100%",
-                duration: 1,
-                onComplete: () => {
-                    gsap.to("#loader", { opacity: 0, duration: 0.5, onComplete: () => {
-                        document.getElementById('loader').style.display = 'none';
-                    }});
-                    gsap.to(".reveal", { opacity: 1, y: 0, stagger: 0.1, duration: 0.8 });
-                }
-            });
-        });
+            <a href="#" onclick="checkLink(event,this)" class="glass p-4 rounded-2xl flex justify-between reveal">
+                <span>Instagram</span>
+                <i data-lucide="lock"></i>
+            </a>
 
-        // 2. Notifikasi Toast Function
-        function showToast(msg, type = "info") {
-            const toast = document.getElementById('toast');
-            const toastMsg = document.getElementById('toast-msg');
-            const toastIcon = document.getElementById('toast-icon');
-            const iconBg = document.getElementById('toast-icon-bg');
+            <a href="https://discord.gg/jRkcCFdT4T" class="glass p-4 rounded-2xl flex justify-between reveal">
+                <span>Discord</span>
+                <i data-lucide="external-link"></i>
+            </a>
+        </div>
 
-            toastMsg.innerText = msg;
-            
-            if (type === "success") {
-                iconBg.className = "w-8 h-8 rounded-full flex items-center justify-center bg-green-500/20";
-                toastIcon.className = "w-4 h-4 text-green-400";
-                toastIcon.setAttribute('data-lucide', 'check-circle');
-            } else if (type === "error") {
-                iconBg.className = "w-8 h-8 rounded-full flex items-center justify-center bg-red-500/20";
-                toastIcon.className = "w-4 h-4 text-red-400";
-                toastIcon.setAttribute('data-lucide', 'alert-circle');
-            } else {
-                iconBg.className = "w-8 h-8 rounded-full flex items-center justify-center bg-blue-500/20";
-                toastIcon.className = "w-4 h-4 text-blue-400";
-                toastIcon.setAttribute('data-lucide', 'info');
-            }
+        <!-- Form -->
+        <form id="contactForm" class="space-y-3 reveal">
+            <input id="name" placeholder="Nama..." class="w-full p-3 rounded-xl">
+            <textarea id="message" placeholder="Pesan..." class="w-full p-3 rounded-xl"></textarea>
 
-            lucide.createIcons();
-            toast.classList.add('active');
-            
-            setTimeout(() => {
-                toast.classList.remove('active');
-            }, 3000);
+            <button id="btn-submit" class="w-full py-3 rounded-xl flex justify-center gap-2">
+                <span>Kirim</span>
+                <i data-lucide="send"></i>
+            </button>
+        </form>
+
+    </div>
+</main>
+
+<script>
+const WEBHOOK_URL = "PASTE_WEBHOOK_KAMU";
+
+lucide.createIcons();
+
+// Loader
+window.onload = () => {
+    gsap.to("#progress", {
+        width: "100%",
+        duration: 1,
+        onComplete: () => {
+            gsap.to("#loader", { opacity: 0, onComplete: () => loader.remove() });
+            gsap.to(".reveal", { opacity: 1, y: 0, stagger: 0.1 });
         }
+    });
+};
 
-        // 3. Check Link Setting
-        function checkLink(e, el) {
-            const href = el.getAttribute('href');
-            if (href === "#" || href === "") {
-                e.preventDefault();
-                showToast("Link ini belum di-setting oleh Sean", "info");
-            }
-        }
+// Toast
+function toast(msg){
+    const t = document.getElementById("toast");
+    t.innerText = msg;
+    t.classList.add("active");
+    setTimeout(()=>t.classList.remove("active"),2000);
+}
 
-        // 4. Form Submission & Animation
-        document.getElementById('contactForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+// Link check
+function checkLink(e, el){
+    if(el.getAttribute("href") === "#"){
+        e.preventDefault();
+        toast("Belum tersedia");
+    }
+}
 
-            const name = document.getElementById('name').value.trim();
-            const message = document.getElementById('message').value.trim();
-            const btn = document.getElementById('btn-submit');
-            const btnText = document.getElementById('btn-text');
-            const icon = document.getElementById('send-icon');
+// Form
+document.getElementById("contactForm").onsubmit = async(e)=>{
+    e.preventDefault();
 
-            // Validasi Input
-            if (!name) {
-                showToast("Nama tidak boleh kosong!", "error");
-                document.getElementById('name').focus();
-                return;
-            }
-            if (!message) {
-                showToast("Pesan belum diisi!", "error");
-                document.getElementById('message').focus();
-                return;
-            }
+    const name = name.value.trim();
+    const msg = message.value.trim();
 
-            // Animasi Proses
-            btn.disabled = true;
-            btnText.innerText = "SEDANG MENGIRIM...";
-            
-            try {
-                // Simulasi delay sedikit untuk animasi
-                await new Promise(resolve => setTimeout(resolve, 800));
+    if(!name || !msg) return toast("Isi dulu!");
 
-                const response = await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        embeds: [{
-                            title: "📩 Pesan Baru Masuk",
-                            color: 3447003,
-                            fields: [
-                                { name: "👤 Dari", value: name, inline: true },
-                                { name: "💬 Pesan", value: message }
-                            ],
-                            timestamp: new Date()
-                        }]
-                    })
-                });
+    await fetch(WEBHOOK_URL,{
+        method:"POST",
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+            content:`Pesan dari ${name}:\n${msg}`
+        })
+    });
 
-                if (response.ok) {
-                    // Animasi Terbang Berhasil
-                    icon.classList.add('animate-fly');
-                    showToast("Pesan Berhasil Terkirim!", "success");
-                    document.getElementById('contactForm').reset();
-                } else {
-                    throw new Error("Gagal");
-                }
-            } catch (err) {
-                showToast("Gagal Mengirim! Periksa Webhook.", "error");
-            } finally {
-                // Reset Tombol setelah beberapa detik
-                setTimeout(() => {
-                    btn.disabled = false;
-                    btnText.innerText = "Kirim Pesan";
-                    icon.classList.remove('animate-fly');
-                }, 2000);
-            }
-        });
-    </script>
+    toast("Terkirim!");
+    contactForm.reset();
+};
+</script>
+
 </body>
-                                  </html>
+</html>
