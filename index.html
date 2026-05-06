@@ -1,183 +1,217 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Echo Lounge</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Echo Lounge | Community</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<style>
-body {
-  margin:0;
-  background:#020617;
-  font-family:sans-serif;
-}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-/* CARD */
-.card {
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
-  border:1px solid rgba(255,255,255,0.08);
-  padding:28px;
-  max-width:360px;
-  width:100%;
-  box-shadow:0 20px 60px rgba(0,0,0,0.7);
-}
+        body {
+            margin: 0;
+            background: radial-gradient(circle at top right, #1e1b4b, #020617);
+            font-family: 'Inter', sans-serif;
+        }
 
-/* BUTTON */
-.btn {
-  transition:0.25s;
-}
-.btn:hover { transform: translateY(-2px); }
-.btn:active { transform: scale(0.96); }
+        /* Glassmorphism Card */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 32px;
+            max-width: 380px;
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
 
-/* TOAST */
-.toast {
-  backdrop-filter: blur(16px);
-  background: rgba(0,0,0,0.7);
-  border:1px solid rgba(255,255,255,0.1);
-  animation:fade 0.3s;
-}
-@keyframes fade {
-  from {opacity:0; transform:translateY(20px);}
-  to {opacity:1; transform:translateY(0);}
-}
-</style>
+        /* Smooth Button Animations */
+        .btn {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
+            filter: brightness(1.1);
+        }
+        .btn:active { transform: scale(0.97); }
+
+        /* Custom Inputs */
+        textarea:focus {
+            outline: none;
+            border-color: #6366f1;
+            ring: 2px #6366f1;
+        }
+
+        /* Toast Animation */
+        .toast {
+            backdrop-filter: blur(20px);
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+            animation: slideUp 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translate(-50%, 40px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+    </style>
 </head>
 
 <body class="text-white flex justify-center items-center min-h-screen px-4">
 
 <div class="card text-center">
+    <div class="relative inline-block mb-6">
+        <div class="absolute inset-0 bg-indigo-500 blur-2xl opacity-20 rounded-full"></div>
+        <img src="https://i.imgur.com/7yUvePI.png" 
+             class="w-20 h-20 mx-auto rounded-2xl relative border border-white/10 shadow-xl"
+             alt="Logo">
+    </div>
 
-<img src="logo.png"
-onerror="this.src='https://i.imgur.com/7yUvePI.png'"
-class="w-16 mx-auto mb-4">
+    <h1 class="text-2xl font-bold tracking-tight">Echo Lounge</h1>
+    <p class="text-indigo-300/70 text-sm font-medium mb-8">Exclusive Discord Community</p>
 
-<h1 class="text-2xl font-semibold">Echo Lounge</h1>
-<p class="text-gray-400 text-sm mb-6">Discord Community</p>
+    <div id="menu" class="space-y-4">
+        <a href="https://discord.gg/LINK_KAMU" target="_blank"
+           class="btn py-3.5 rounded-2xl bg-[#5865F2] font-semibold text-white">
+            <i class="fab fa-discord text-xl"></i>
+            Join Discord
+        </a>
 
-<!-- MENU -->
-<div id="menu" class="space-y-3">
+        <a href="https://tiktok.com/@username" target="_blank"
+           class="btn py-3.5 rounded-2xl bg-white/5 border border-white/10 font-semibold hover:bg-white/10">
+            <i class="fab fa-tiktok text-xl"></i>
+            TikTok
+        </a>
 
-<a href="https://discord.gg/LINK_KAMU" target="_blank"
-class="btn block py-3 rounded-xl bg-[#5865F2]">
-🚀 Join Discord
-</a>
+        <button onclick="openForm()"
+                class="btn w-full py-3.5 rounded-2xl bg-gradient-to-tr from-slate-800 to-slate-700 border border-slate-600 font-semibold mt-2">
+            <i class="fa-solid fa-comment-dots text-lg text-indigo-400"></i>
+            Kritik & Saran
+        </button>
+    </div>
 
-<a href="https://tiktok.com/@username" target="_blank"
-class="btn block py-3 rounded-xl bg-black border border-gray-700">
-🎵 TikTok
-</a>
+    <div id="form" class="hidden">
+        <div class="flex items-center mb-6">
+            <button onclick="backMenu()" class="p-2 hover:bg-white/5 rounded-full transition">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <span class="flex-1 font-semibold mr-8">Kirim Masukan</span>
+        </div>
 
-<button onclick="openForm()"
-class="btn w-full py-3 rounded-xl bg-gray-800">
-💬 Kritik & Saran
-</button>
+        <div class="flex gap-3 mb-4">
+            <button onclick="setType('Kritik')" id="kritikBtn"
+                    class="flex-1 py-2.5 rounded-xl bg-white/5 border border-white/5 transition-all duration-300 text-sm font-medium">
+                🚨 Kritik
+            </button>
+            <button onclick="setType('Saran')" id="saranBtn"
+                    class="flex-1 py-2.5 rounded-xl bg-white/5 border border-white/5 transition-all duration-300 text-sm font-medium">
+                💡 Saran
+            </button>
+        </div>
 
+        <textarea id="pesan" rows="4"
+                  class="w-full p-4 rounded-xl bg-black/40 border border-white/10 focus:border-indigo-500 transition-all text-sm resize-none"
+                  placeholder="Ceritakan pengalamanmu..."></textarea>
+
+        <button id="sendBtn" onclick="kirimPesan()"
+                class="btn w-full mt-4 py-3.5 rounded-2xl bg-indigo-600 font-bold shadow-lg shadow-indigo-900/20">
+            Kirim Sekarang
+        </button>
+    </div>
 </div>
 
-<!-- FORM -->
-<div id="form" class="hidden">
-
-<button onclick="backMenu()" class="text-sm text-gray-400 mb-3">
-← Kembali
-</button>
-
-<div class="flex gap-2 mb-3">
-<button onclick="setType('Kritik')" id="kritikBtn"
-class="flex-1 py-2 rounded-lg bg-gray-800">Kritik</button>
-
-<button onclick="setType('Saran')" id="saranBtn"
-class="flex-1 py-2 rounded-lg bg-gray-800">Saran</button>
-</div>
-
-<textarea id="pesan"
-class="w-full p-3 rounded-lg bg-black/40 border border-gray-700"
-placeholder="Tulis pesan..."></textarea>
-
-<button id="sendBtn" onclick="kirimPesan()"
-class="btn w-full mt-3 py-3 rounded-xl bg-green-600">
-Kirim
-</button>
-
-</div>
-
-</div>
-
-<!-- TOAST -->
-<div id="toast"
-class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 rounded-lg text-sm toast">
+<div id="toast" class="hidden fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 rounded-2xl text-sm font-medium toast z-50">
 </div>
 
 <script>
-let selectedType = null;
+    let selectedType = null;
+    const kritikBtn = document.getElementById("kritikBtn");
+    const saranBtn = document.getElementById("saranBtn");
 
-function openForm(){
-  document.getElementById("menu").classList.add("hidden");
-  document.getElementById("form").classList.remove("hidden");
-}
+    function openForm(){
+        document.getElementById("menu").classList.add("hidden");
+        document.getElementById("form").classList.remove("hidden");
+    }
 
-function backMenu(){
-  document.getElementById("form").classList.add("hidden");
-  document.getElementById("menu").classList.remove("hidden");
-}
+    function backMenu(){
+        document.getElementById("form").classList.add("hidden");
+        document.getElementById("menu").classList.remove("hidden");
+    }
 
-function setType(type){
-  selectedType = type;
+    function setType(type){
+        selectedType = type;
+        
+        // Reset styles
+        [kritikBtn, saranBtn].forEach(btn => {
+            btn.classList.remove("bg-indigo-600", "border-indigo-400", "shadow-lg");
+            btn.classList.add("bg-white/5", "border-white/5");
+        });
 
-  kritikBtn.classList.remove("bg-indigo-600");
-  saranBtn.classList.remove("bg-indigo-600");
+        const activeBtn = type === "Kritik" ? kritikBtn : saranBtn;
+        activeBtn.classList.remove("bg-white/5", "border-white/5");
+        activeBtn.classList.add("bg-indigo-600", "border-indigo-400", "shadow-lg");
+    }
 
-  if(type==="Kritik") kritikBtn.classList.add("bg-indigo-600");
-  else saranBtn.classList.add("bg-indigo-600");
-}
+    function showToast(msg, isError = false){
+        const t = document.getElementById("toast");
+        t.innerHTML = isError ? `❌ ${msg}` : `✅ ${msg}`;
+        t.classList.remove("hidden");
+        
+        setTimeout(() => t.classList.add("hidden"), 3000);
+    }
 
-function showToast(msg){
-  const t = document.getElementById("toast");
-  t.innerText = msg;
-  t.classList.remove("hidden");
+    async function kirimPesan(){
+        const pesanEl = document.getElementById("pesan");
+        const pesan = pesanEl.value;
+        const btn = document.getElementById("sendBtn");
 
-  setTimeout(()=>t.classList.add("hidden"),2000);
-}
+        if(!selectedType) return showToast("Pilih tipe masukan!", true);
+        if(!pesan.trim()) return showToast("Pesan tidak boleh kosong!", true);
 
-async function kirimPesan(){
-  const pesanEl = document.getElementById("pesan");
-  const pesan = pesanEl.value;
-  const btn = document.getElementById("sendBtn");
+        btn.innerHTML = '<i class="fa-solid fa-circle-notch animate-spin"></i> Mengirim...';
+        btn.disabled = true;
 
-  if(!selectedType) return showToast("Pilih dulu!");
-  if(!pesan) return showToast("Isi pesan dulu!");
+        const webhookURL = "WEBHOOK_KAMU"; 
 
-  btn.innerText = "Mengirim...";
-  btn.disabled = true;
+        try {
+            const res = await fetch(webhookURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    embeds: [{
+                        title: `📩 Masukan Baru: ${selectedType}`,
+                        description: pesan,
+                        color: selectedType === "Kritik" ? 15548997 : 5763719,
+                        timestamp: new Date()
+                    }]
+                })
+            });
 
-  const webhookURL = "WEBHOOK_KAMU";
+            if(res.ok) {
+                showToast("Terima kasih! Masukan terkirim.");
+                pesanEl.value = "";
+                setTimeout(backMenu, 1500);
+            } else {
+                throw new Error();
+            }
+        } catch {
+            showToast("Gagal mengirim pesan.", true);
+        }
 
-  try{
-    await fetch(webhookURL,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({
-        embeds:[{
-          title:`📩 ${selectedType}`,
-          description:pesan,
-          color:selectedType==="Kritik"?16711680:65280
-        }]
-      })
-    });
-
-    showToast("Berhasil dikirim 🚀");
-    pesanEl.value="";
-
-  }catch{
-    showToast("Gagal kirim ❌");
-  }
-
-  btn.innerText = "Kirim";
-  btn.disabled = false;
-}
+        btn.innerHTML = "Kirim Sekarang";
+        btn.disabled = false;
+    }
 </script>
 
 </body>
