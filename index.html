@@ -3,262 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echo Lounge | Premium Connect</title>
-
+    <title>Echo Lounge | Connect</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap');
 
         :root {
-            --bg: #030712;
-            --card-bg: rgba(17, 24, 39, 0.7);
+            --bg: #05070a;
+            --card: #0d1117;
             --accent: #6366f1;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --input-bg: rgba(0, 0, 0, 0.4);
+            --text-main: #ffffff;
+            --text-dim: rgba(255, 255, 255, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
         .light-mode {
-            --bg: #f1f5f9;
-            --card-bg: rgba(255, 255, 255, 0.8);
+            --bg: #f8fafc;
+            --card: #ffffff;
             --accent: #4f46e5;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --input-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-dim: #64748b;
+            --glass-border: rgba(0, 0, 0, 0.05);
         }
 
         body {
             background-color: var(--bg);
-            color: var(--text-primary);
+            color: var(--text-main);
             font-family: 'Plus Jakarta Sans', sans-serif;
-            transition: background 0.5s ease;
+            transition: 0.5s ease;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             overflow: hidden;
         }
 
-        /* Abstract Background Glow */
-        .glow {
-            position: fixed;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            z-index: -1;
-            filter: blur(60px);
-        }
-
-        .glass-container {
-            background: var(--card-bg);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 48px;
-            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.5);
-        }
-
-        .light-mode .glass-container {
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Input Fix: Teks harus Putih di Dark Mode */
-        textarea {
-            background: var(--input-bg) !important;
-            color: var(--text-primary) !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            transition: all 0.3s ease;
-        }
-        textarea:focus { border-color: var(--accent) !important; }
-
-        .btn-premium {
+        /* Card Layout Fix */
+        .glass-box {
+            background: var(--card);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            width: 100%;
+            max-width: 360px;
+            padding: 40px 30px;
+            text-center: center;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
             position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
         }
-        .btn-premium:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 15px 30px -10px var(--accent);
-        }
-        .btn-premium:active { transform: scale(0.96); }
 
-        /* Fancy Notification */
-        #toast {
+        /* Logo Profile Fix */
+        .profile-frame {
+            width: 100px;
+            height: 100px;
+            background: #ffffff;
+            border-radius: 30px;
+            margin: 0 auto 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.2);
+            border: 2px solid var(--accent);
+        }
+
+        .profile-frame img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Button Premium */
+        .btn-custom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 18px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 12px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-discord { background: #5865F2; color: #ffffff; }
+        .btn-tiktok { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: var(--text-main); }
+        .btn-form { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #ffffff; margin-top: 10px; }
+
+        .btn-custom:hover { transform: translateY(-3px); filter: brightness(1.1); }
+        .btn-custom:active { transform: scale(0.95); }
+
+        /* Input Fix: Agar teks Putih di Dark Mode */
+        textarea {
+            width: 100%;
+            background: rgba(0,0,0,0.2) !important;
+            border: 1px solid var(--glass-border) !important;
+            border-radius: 18px;
+            padding: 15px;
+            color: #ffffff !important; /* Paksa Putih */
+            font-size: 14px;
+            outline: none;
+            margin-bottom: 15px;
+        }
+        .light-mode textarea { color: #000000 !important; background: #f1f5f9 !important; }
+
+        /* Notification Fix */
+        #notif-pop {
+            position: fixed;
             bottom: -100px;
             left: 50%;
             transform: translateX(-50%);
-            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            background: #1e293b;
+            color: white;
+            padding: 16px 30px;
+            border-radius: 25px;
+            font-weight: 700;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border: 1px solid var(--accent);
+            z-index: 1000;
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        #toast.active { bottom: 40px; }
-
+        #notif-pop.active { bottom: 40px; }
     </style>
 </head>
-<body class="flex justify-center items-center min-h-screen px-6">
+<body>
 
-    <div class="glow" style="top: -10%; left: -10%;"></div>
-    <div class="glow" style="bottom: -10%; right: -10%;"></div>
-
-    <button onclick="toggleTheme()" class="fixed top-8 right-8 w-14 h-14 glass-container flex items-center justify-center z-50 hover:rotate-12 transition-transform">
-        <i id="themeIcon" class="fas fa-moon text-indigo-400 text-xl"></i>
+    <button onclick="changeTheme()" style="position:fixed; top:30px; right:30px; width:50px; height:50px; background:var(--card); border:1px solid var(--glass-border); border-radius:15px; z-index:100; cursor:pointer; color:var(--accent);">
+        <i id="themeIcon" class="fas fa-moon"></i>
     </button>
 
-    <div class="glass-container w-full max-w-[400px] p-10 text-center relative overflow-hidden" id="mainWrapper">
-        
-        <div id="headerSection">
-            <div class="relative inline-block mb-8 group">
-                <div class="absolute inset-0 bg-indigo-600 blur-3xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                <div class="w-28 h-28 bg-white p-2 rounded-[2.5rem] shadow-2xl relative border border-white/20">
-                    <img src="https://i.imgur.com/7yUvePI.png" class="w-full h-full object-contain rounded-[2rem]" alt="Profile">
-                </div>
-            </div>
-            <h1 class="text-4xl font-extrabold tracking-tighter mb-2">Echo Lounge</h1>
-            <p class="text-sm font-semibold tracking-[0.2em] opacity-40 uppercase mb-10">Connected Excellence</p>
+    <div class="glass-box" id="ui-card">
+        <div class="profile-frame">
+            <img src="https://i.imgur.com/7yUvePI.png" alt="EC Logo">
         </div>
 
-        <div id="menuView" class="space-y-4">
-            <a href="https://discord.gg/jRkcCFdT4T" target="_blank" 
-               class="btn-premium flex items-center justify-between px-8 py-5 rounded-[2rem] bg-[#5865F2] text-white group">
-                <div class="flex items-center gap-4">
-                    <i class="fab fa-discord text-2xl"></i>
-                    <span class="font-bold">Discord Community</span>
-                </div>
-                <i class="fas fa-arrow-right opacity-40 group-hover:translate-x-2 transition-transform"></i>
-            </a>
+        <h1 style="font-size: 28px; font-weight: 800; letter-spacing: -1px; margin-bottom: 5px;">Echo Lounge</h1>
+        <p style="color: var(--text-dim); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 35px;">Connected Excellence</p>
 
-            <a href="https://tiktok.com/@sean_logs" target="_blank"
-               class="btn-premium flex items-center justify-between px-8 py-5 rounded-[2rem] bg-white/5 border border-white/10 group">
-                <div class="flex items-center gap-4">
-                    <i class="fab fa-tiktok text-2xl"></i>
-                    <span class="font-bold">TikTok Feed</span>
-                </div>
-                <i class="fas fa-arrow-up-right-from-square opacity-40 group-hover:-translate-y-1 transition-transform"></i>
-            </a>
+        <div id="main-menu">
+            <button onclick="window.open('https://discord.gg/jRkcCFdT4T')" class="btn-custom btn-discord">
+                <i class="fab fa-discord text-xl"></i> Discord Community
+            </button>
+            
+            <button onclick="window.open('https://tiktok.com/@sean_logs')" class="btn-custom btn-tiktok">
+                <i class="fab fa-tiktok text-xl"></i> TikTok Feed
+            </button>
 
-            <button onclick="changePage('form')" 
-                    class="btn-premium w-full py-5 rounded-[2rem] bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold mt-4 shadow-lg">
-                <i class="fa-solid fa-bolt mr-2"></i> Kirim Masukan
+            <button onclick="showPage('form')" class="btn-custom btn-form shadow-lg shadow-indigo-500/20">
+                <i class="fas fa-paper-plane"></i> Kirim Masukan
             </button>
         </div>
 
-        <div id="formView" class="hidden text-left">
-            <button onclick="changePage('menu')" class="mb-8 flex items-center gap-2 font-bold text-xs opacity-40 hover:opacity-100 transition-all">
+        <div id="form-page" style="display: none; text-align: left;">
+            <p onclick="showPage('menu')" style="cursor:pointer; font-size: 12px; font-weight: 800; opacity: 0.5; margin-bottom: 20px;">
                 <i class="fas fa-chevron-left"></i> KEMBALI
-            </button>
+            </p>
 
-            <div class="grid grid-cols-2 gap-3 mb-6">
-                <button onclick="selectType('Kritik', this)" class="type-selector py-4 rounded-2xl bg-white/5 border border-white/5 font-bold text-[10px] tracking-widest uppercase hover:border-indigo-500 transition-all">🚨 Kritik</button>
-                <button onclick="selectType('Saran', this)" class="type-selector py-4 rounded-2xl bg-white/5 border border-white/5 font-bold text-[10px] tracking-widest uppercase hover:border-indigo-500 transition-all">💡 Saran</button>
+            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <button id="kBtn" onclick="setType('Kritik')" style="flex:1; padding:12px; border-radius:12px; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); color:var(--text-main); font-weight:700; font-size:10px;">KRITIK</button>
+                <button id="sBtn" onclick="setType('Saran')" style="flex:1; padding:12px; border-radius:12px; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); color:var(--text-main); font-weight:700; font-size:10px;">SARAN</button>
             </div>
 
-            <textarea id="userInput" rows="5" class="w-full p-5 rounded-3xl outline-none text-sm leading-relaxed mb-6" placeholder="Tuliskan isi pikiranmu..."></textarea>
+            <textarea id="feedbackText" rows="4" placeholder="Tulis pesanmu di sini..."></textarea>
 
-            <button id="submitBtn" onclick="handlePost()" class="w-full py-5 rounded-[2rem] bg-indigo-600 text-white font-extrabold shadow-2xl active:scale-95 transition-all">
-                KIRIM FEEDBACK
-            </button>
+            <button id="submitBtn" onclick="submitToDiscord()" class="btn-custom btn-form">KIRIM SEKARANG</button>
         </div>
     </div>
 
-    <div id="toast" class="fixed px-8 py-5 rounded-[2rem] bg-slate-900 border border-white/10 shadow-2xl flex items-center gap-4 z-[100] min-w-[280px]">
-        <div id="toastStatus" class="w-10 h-10 rounded-full flex items-center justify-center"></div>
-        <div>
-            <h4 id="toastTitle" class="text-white font-bold text-sm">System</h4>
-            <p id="toastMsg" class="text-white/60 text-xs"></p>
-        </div>
-    </div>
+    <div id="notif-pop">Pesan Terkirim! 🚀</div>
 
     <script>
-        let currentType = "";
-        const webhook = "https://discord.com/api/webhooks/1501586415941582918/ALwCGRA0veR8KS-Lrix7Gdeky7gPagBN_ViHmU-R4O0HKFLPUIT5jbGir0SEm9N1tm8j";
+        let feedbackType = "";
+        const webhookUrl = "https://discord.com/api/webhooks/1501586415941582918/ALwCGRA0veR8KS-Lrix7Gdeky7gPagBN_ViHmU-R4O0HKFLPUIT5jbGir0SEm9N1tm8j";
 
-        // Initial GSAP Animation
-        window.addEventListener('DOMContentLoaded', () => {
-            gsap.from("#mainWrapper", { duration: 1.5, y: 100, opacity: 0, ease: "expo.out" });
-            gsap.from("#headerSection > *", { duration: 1, y: 30, opacity: 0, stagger: 0.2, ease: "power4.out", delay: 0.5 });
-            gsap.from(".btn-premium", { duration: 1, x: -50, opacity: 0, stagger: 0.15, ease: "power4.out", delay: 0.8 });
-        });
+        // Initial GSAP Intro
+        gsap.from("#ui-card", { duration: 1.2, y: 60, opacity: 0, ease: "expo.out" });
 
-        function toggleTheme() {
+        function changeTheme() {
             document.body.classList.toggle("light-mode");
             const icon = document.getElementById("themeIcon");
-            if(document.body.classList.contains("light-mode")) {
-                icon.className = "fas fa-sun text-orange-500 text-xl";
-            } else {
-                icon.className = "fas fa-moon text-indigo-400 text-xl";
-            }
+            icon.className = document.body.classList.contains("light-mode") ? "fas fa-sun" : "fas fa-moon";
         }
 
-        function changePage(page) {
-            const menu = document.getElementById("menuView");
-            const form = document.getElementById("formView");
-
+        function showPage(page) {
+            const menu = document.getElementById("main-menu");
+            const form = document.getElementById("form-page");
+            
             if(page === 'form') {
-                gsap.to(menu, { duration: 0.4, x: -100, opacity: 0, onComplete: () => {
-                    menu.classList.add("hidden");
-                    form.classList.remove("hidden");
-                    gsap.fromTo(form, { x: 100, opacity: 0 }, { duration: 0.6, x: 0, opacity: 1, ease: "expo.out" });
+                gsap.to(menu, { opacity: 0, y: 10, duration: 0.3, onComplete: () => {
+                    menu.style.display = "none";
+                    form.style.display = "block";
+                    gsap.fromTo(form, { opacity: 0, y: -10 }, { opacity: 1, y: 0 });
                 }});
             } else {
-                gsap.to(form, { duration: 0.4, x: 100, opacity: 0, onComplete: () => {
-                    form.classList.add("hidden");
-                    menu.classList.remove("hidden");
-                    gsap.fromTo(menu, { x: -100, opacity: 0 }, { duration: 0.6, x: 0, opacity: 1, ease: "expo.out" });
+                gsap.to(form, { opacity: 0, y: 10, duration: 0.3, onComplete: () => {
+                    form.style.display = "none";
+                    menu.style.display = "block";
+                    gsap.fromTo(menu, { opacity: 0, y: -10 }, { opacity: 1, y: 0 });
                 }});
             }
         }
 
-        function selectType(val, el) {
-            currentType = val;
-            document.querySelectorAll('.type-selector').forEach(b => b.classList.remove('bg-indigo-600', 'border-indigo-400', 'text-white'));
-            el.classList.add('bg-indigo-600', 'border-indigo-400', 'text-white');
-            gsap.from(el, { scale: 0.9, duration: 0.3 });
+        function setType(type) {
+            feedbackType = type;
+            const k = document.getElementById("kBtn");
+            const s = document.getElementById("sBtn");
+            k.style.background = s.style.background = "rgba(255,255,255,0.05)";
+            (type === 'Kritik' ? k : s).style.background = "#6366f1";
         }
 
-        function triggerToast(title, msg, error = false) {
-            const t = document.getElementById("toast");
-            const s = document.getElementById("toastStatus");
-            document.getElementById("toastTitle").innerText = title;
-            document.getElementById("toastMsg").innerText = msg;
+        async function submitToDiscord() {
+            const msg = document.getElementById("feedbackText").value;
+            const n = document.getElementById("notif-pop");
 
-            s.className = error ? "w-10 h-10 rounded-full bg-red-500/20 text-red-500 flex items-center justify-center" : "w-10 h-10 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center";
-            s.innerHTML = error ? '<i class="fas fa-times"></i>' : '<i class="fas fa-check"></i>';
-
-            t.classList.add("active");
-            setTimeout(() => t.classList.remove("active"), 4000);
-        }
-
-        async function handlePost() {
-            const text = document.getElementById("userInput").value;
-            const btn = document.getElementById("submitBtn");
-
-            if(!currentType) return triggerToast("Gagal", "Pilih jenis masukan dulu!", true);
-            if(!text.trim()) return triggerToast("Gagal", "Pesan tidak boleh kosong!", true);
-
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner animate-spin"></i> MENGIRIM...';
+            if(!feedbackType || !msg.trim()) {
+                n.innerText = "Pilih kategori & isi pesan!";
+                n.style.background = "#ef4444";
+                n.classList.add("active");
+                setTimeout(() => n.classList.remove("active"), 3000);
+                return;
+            }
 
             try {
-                await fetch(webhook, {
+                await fetch(webhookUrl, {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
                     body: JSON.stringify({
                         embeds: [{
-                            title: `✨ Masukan Baru: ${currentType}`,
-                            description: text,
-                            color: currentType === "Kritik" ? 15548997 : 5763719,
-                            footer: { text: "Echo Lounge Analytics" },
+                            title: `Feedback: ${feedbackType}`,
+                            description: msg,
+                            color: 6518771,
                             timestamp: new Date()
                         }]
                     })
                 });
-                triggerToast("Berhasil!", "Pesanmu sudah mendarat di Discord.");
-                document.getElementById("userInput").value = "";
-                setTimeout(() => changePage('menu'), 2000);
+                n.innerText = "Berhasil Dikirim! 🚀";
+                n.style.background = "#6366f1";
+                n.classList.add("active");
+                document.getElementById("feedbackText").value = "";
+                setTimeout(() => {
+                    n.classList.remove("active");
+                    showPage('menu');
+                }, 2000);
             } catch {
-                triggerToast("Error", "Gagal menghubungi server.", true);
+                n.innerText = "Gagal Mengirim!";
+                n.style.background = "#ef4444";
+                n.classList.add("active");
+                setTimeout(() => n.classList.remove("active"), 3000);
             }
-            btn.disabled = false;
-            btn.innerText = "KIRIM FEEDBACK";
         }
     </script>
 </body>
