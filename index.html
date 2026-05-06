@@ -4,49 +4,83 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Echo Lounge</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background: radial-gradient(circle at top, #0f172a, #020617);
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .neon {
+      box-shadow: 0 0 10px #6366f1, 0 0 20px #6366f1;
+    }
+
+    .neon-green {
+      box-shadow: 0 0 10px #22c55e, 0 0 20px #22c55e;
+    }
+
+    .fade-in {
+      animation: fade 1s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fade {
+      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(20px); }
+    }
+  </style>
 </head>
-<body class="bg-black text-white font-sans">
 
-  <!-- Container -->
-  <div class="min-h-screen flex flex-col items-center justify-center px-4">
+<body class="text-white font-sans">
 
-    <!-- Logo -->
-    <img src="logo.png" alt="Echo Lounge" class="w-28 mb-6">
+  <div class="min-h-screen flex items-center justify-center px-4">
 
-    <!-- Title -->
-    <h1 class="text-3xl font-bold mb-2">Echo Lounge</h1>
-    <p class="text-gray-400 mb-6 text-center">Welcome to our Discord community</p>
+    <!-- Card -->
+    <div class="glass rounded-2xl p-6 w-full max-w-sm text-center fade-in">
 
-    <!-- Buttons -->
-    <div class="w-full max-w-xs space-y-3">
-      
-      <!-- Discord -->
-      <a href="https://discord.gg/LINK_KAMU"
-         class="block w-full text-center bg-indigo-600 hover:bg-indigo-700 py-3 rounded-xl transition">
-         Join Discord
-      </a>
+      <!-- Logo -->
+      <img src="logo.png" class="w-24 mx-auto mb-4">
 
-      <!-- TikTok -->
-      <a href="https://tiktok.com/@username"
-         class="block w-full text-center bg-pink-600 hover:bg-pink-700 py-3 rounded-xl transition">
-         TikTok
-      </a>
+      <!-- Title -->
+      <h1 class="text-3xl font-bold mb-1">Echo Lounge</h1>
+      <p class="text-gray-400 mb-6">Discord Community</p>
 
-    </div>
+      <!-- Buttons -->
+      <div class="space-y-3">
 
-    <!-- Kritik & Saran -->
-    <div class="w-full max-w-xs mt-8">
-      <h2 class="text-lg mb-2">Kritik & Saran</h2>
-      
-      <textarea id="pesan"
-        class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none"
-        placeholder="Tulis pesan kamu..."></textarea>
+        <a href="https://discord.gg/LINK_KAMU"
+          class="block py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 neon transition">
+          🚀 Join Discord
+        </a>
 
-      <button onclick="kirimPesan()"
-        class="w-full mt-3 bg-green-600 hover:bg-green-700 py-3 rounded-xl transition">
-        Kirim
-      </button>
+        <a href="https://tiktok.com/@username"
+          class="block py-3 rounded-xl bg-pink-600 hover:bg-pink-700 neon transition">
+          🎵 TikTok
+        </a>
+
+      </div>
+
+      <!-- Kritik -->
+      <div class="mt-6 text-left">
+        <h2 class="mb-2 text-sm text-gray-300">Kritik & Saran</h2>
+
+        <textarea id="pesan"
+          class="w-full p-3 rounded-lg bg-black/40 border border-gray-700 focus:outline-none"
+          placeholder="Tulis sesuatu..."></textarea>
+
+        <button onclick="kirimPesan()"
+          class="w-full mt-3 py-3 rounded-xl bg-green-600 hover:bg-green-700 neon-green transition">
+          Kirim
+        </button>
+      </div>
+
     </div>
 
   </div>
@@ -56,29 +90,38 @@
       const pesan = document.getElementById("pesan").value;
 
       if (!pesan) {
-        alert("Isi pesan dulu!");
+        alert("Isi dulu pesan nya!");
         return;
       }
 
       const webhookURL = "WEBHOOK_KAMU_DISINI";
 
       const data = {
-        content: "📩 **Kritik & Saran Baru (Echo Lounge)**\n" + pesan
+        embeds: [
+          {
+            title: "📩 Kritik & Saran Baru",
+            description: pesan,
+            color: 5763719,
+            footer: {
+              text: "Echo Lounge"
+            },
+            timestamp: new Date()
+          }
+        ]
       };
 
       try {
         await fetch(webhookURL, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data)
         });
 
-        alert("Pesan berhasil dikirim!");
+        alert("Terkirim!");
         document.getElementById("pesan").value = "";
-      } catch (error) {
-        alert("Gagal kirim pesan!");
+
+      } catch {
+        alert("Gagal kirim!");
       }
     }
   </script>
