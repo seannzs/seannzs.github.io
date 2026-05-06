@@ -3,208 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echo Lounge | Community</title>
+    <title>Echo Lounge | Connect</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
+
+        :root {
+            --bg-color: #020617;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --text-main: #ffffff;
+            --text-dim: rgba(255, 255, 255, 0.6);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        .light-mode {
+            --bg-color: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --text-main: #0f172a;
+            --text-dim: #64748b;
+            --border: rgba(0, 0, 0, 0.05);
+        }
 
         body {
             margin: 0;
-            background: radial-gradient(circle at top right, #1e1b4b, #020617);
-            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color 0.5s ease;
+            overflow: hidden;
         }
 
-        /* Glassmorphism Card */
         .card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-radius: 32px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 32px;
-            max-width: 380px;
-            width: 100%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        .btn {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            cursor: pointer;
-        }
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
-            filter: brightness(1.1);
-        }
-        .btn:active { transform: scale(0.97); }
-
-        .toast {
+            background: var(--card-bg);
             backdrop-filter: blur(20px);
-            background: rgba(15, 23, 42, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: slideUp 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translate(-50%, 40px); }
-            to { opacity: 1; transform: translate(-50%, 0); }
+        .btn-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-hover:hover { transform: scale(1.02); }
+        .btn-hover:active { transform: scale(0.98); }
+
+        /* Smooth Floating Animation */
+        .float-anim {
+            animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Toast Styling */
+        .toast-active {
+            animation: slideIn 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+        }
+        @keyframes slideIn {
+            from { transform: translate(-50%, 100px); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
         }
     </style>
 </head>
 
-<body class="text-white flex justify-center items-center min-h-screen px-4">
+<body class="flex justify-center items-center min-h-screen px-4">
 
-<div class="card text-center">
-    <div class="relative inline-block mb-6">
-        <div class="absolute inset-0 bg-indigo-500 blur-2xl opacity-20 rounded-full"></div>
-        <img src="https://api.screenshot.net/v1/get?url=https://files.oaiusercontent.com/file-K1F8i6eYjGz2xZlX8G3P3D&width=200" 
-             onerror="this.src='https://i.imgur.com/7yUvePI.png'"
-             class="w-20 h-20 mx-auto rounded-2xl relative border border-white/10 shadow-xl bg-white p-1"
-             alt="Echo Lounge Logo">
+<button onclick="toggleTheme()" class="fixed top-6 right-6 p-3 rounded-full bg-white/10 border border-white/10 hover:bg-white/20 transition-all z-50">
+    <i id="themeIcon" class="fas fa-moon text-xl text-yellow-400"></i>
+</button>
+
+<div class="card w-full max-w-[380px] p-8 text-center relative overflow-hidden" id="mainCard">
+    <div class="absolute -top-24 -left-24 w-48 h-48 bg-indigo-600/20 blur-[80px] rounded-full"></div>
+    
+    <div class="relative z-10">
+        <div class="float-anim inline-block mb-6">
+            <div class="absolute inset-0 bg-indigo-500 blur-2xl opacity-30 rounded-full"></div>
+            <img src="https://i.imgur.com/7yUvePI.png" 
+                 class="w-24 h-24 mx-auto rounded-[2rem] relative border-2 border-white/20 shadow-2xl bg-white p-2"
+                 alt="Logo">
+        </div>
+
+        <h1 class="text-2xl font-bold tracking-tight">Echo Lounge</h1>
+        <p class="opacity-70 text-sm font-medium mb-8">Premium Discord Experience</p>
     </div>
 
-    <h1 class="text-2xl font-bold tracking-tight">Echo Lounge</h1>
-    <p class="text-indigo-300/70 text-sm font-medium mb-8">Exclusive Discord Community</p>
-
-    <div id="menu" class="space-y-4">
-        <a href="https://discord.gg/jRkcCFdT4T" target="_blank" onclick="checkLink(event, this)"
-           class="btn py-3.5 rounded-2xl bg-[#5865F2] font-semibold text-white">
-            <i class="fab fa-discord text-xl"></i>
-            Join Discord
+    <div id="menuContent" class="space-y-4 relative z-10">
+        <a href="https://discord.gg/jRkcCFdT4T" target="_blank"
+           class="btn-hover flex items-center justify-center gap-3 py-4 rounded-2xl bg-[#5865F2] font-bold text-white shadow-lg shadow-indigo-500/20">
+            <i class="fab fa-discord text-2xl"></i>
+            Join Server
         </a>
 
-        <a href="https://tiktok.com/@username" target="_blank" onclick="checkLink(event, this)"
-           class="btn py-3.5 rounded-2xl bg-white/5 border border-white/10 font-semibold hover:bg-white/10">
+        <a href="https://tiktok.com/@sean_logs" target="_blank"
+           class="btn-hover flex items-center justify-center gap-3 py-4 rounded-2xl bg-black border border-white/10 font-bold text-white">
             <i class="fab fa-tiktok text-xl"></i>
-            TikTok
+            Follow TikTok
         </a>
 
-        <button onclick="openForm()"
-                class="btn w-full py-3.5 rounded-2xl bg-gradient-to-tr from-slate-800 to-slate-700 border border-slate-600 font-semibold mt-2">
-            <i class="fa-solid fa-comment-dots text-lg text-indigo-400"></i>
+        <button onclick="navigate('form')"
+                class="btn-hover w-full flex items-center justify-center gap-3 py-4 rounded-2xl bg-white/5 border border-white/10 font-semibold hover:bg-white/10">
+            <i class="fa-solid fa-paper-plane text-indigo-400"></i>
             Kritik & Saran
         </button>
     </div>
 
-    <div id="form" class="hidden">
+    <div id="formContent" class="hidden relative z-10">
         <div class="flex items-center mb-6">
-            <button onclick="backMenu()" class="p-2 hover:bg-white/5 rounded-full transition">
-                <i class="fa-solid fa-arrow-left"></i>
+            <button onclick="navigate('menu')" class="p-2 hover:bg-white/5 rounded-full transition">
+                <i class="fa-solid fa-chevron-left"></i>
             </button>
-            <span class="flex-1 font-semibold mr-8">Kirim Masukan</span>
+            <span class="flex-1 font-bold text-lg mr-8">Feedback</span>
         </div>
 
-        <div class="flex gap-3 mb-4">
-            <button onclick="setType('Kritik')" id="kritikBtn"
-                    class="flex-1 py-2.5 rounded-xl bg-white/5 border border-white/5 transition-all duration-300 text-sm font-medium">
-                🚨 Kritik
-            </button>
-            <button onclick="setType('Saran')" id="saranBtn"
-                    class="flex-1 py-2.5 rounded-xl bg-white/5 border border-white/5 transition-all duration-300 text-sm font-medium">
-                💡 Saran
-            </button>
+        <div class="grid grid-cols-2 gap-3 mb-4">
+            <button onclick="setType('Kritik')" id="kBtn" class="py-3 rounded-xl bg-white/5 border border-white/5 transition-all font-bold text-xs uppercase tracking-widest">🚨 Kritik</button>
+            <button onclick="setType('Saran')" id="sBtn" class="py-3 rounded-xl bg-white/5 border border-white/5 transition-all font-bold text-xs uppercase tracking-widest">💡 Saran</button>
         </div>
 
-        <textarea id="pesan" rows="4"
-                  class="w-full p-4 rounded-xl bg-black/40 border border-white/10 focus:border-indigo-500 transition-all text-sm resize-none"
-                  placeholder="Tulis sesuatu..."></textarea>
+        <textarea id="msgBox" rows="4"
+                  class="w-full p-4 rounded-2xl bg-black/20 border border-white/10 focus:border-indigo-500 transition-all text-sm resize-none mb-4 outline-none"
+                  placeholder="Ketik pesanmu di sini..."></textarea>
 
-        <button id="sendBtn" onclick="kirimPesan()"
-                class="btn w-full mt-4 py-3.5 rounded-2xl bg-indigo-600 font-bold shadow-lg shadow-indigo-900/20">
-            Kirim Sekarang
+        <button id="submitBtn" onclick="handleSend()"
+                class="btn-hover w-full py-4 rounded-2xl bg-indigo-600 font-extrabold shadow-xl">
+            KIRIM PESAN
         </button>
     </div>
 </div>
 
-<div id="toast" class="hidden fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 rounded-2xl text-sm font-medium toast z-50">
-</div>
+<div id="toast" class="hidden fixed bottom-10 left-1/2 -translate-x-1/2 px-8 py-4 rounded-2xl text-sm font-bold toast-active z-[100] shadow-2xl border border-white/10"></div>
 
 <script>
-    let selectedType = null;
+    let currentType = null;
+    const webhook = "https://discord.com/api/webhooks/1501586415941582918/ALwCGRA0veR8KS-Lrix7Gdeky7gPagBN_ViHmU-R4O0HKFLPUIT5jbGir0SEm9N1tm8j";
 
-    // --- AUTO DETECTION LINK ---
-    function checkLink(event, element) {
-        const url = element.getAttribute('href');
-        // Mendeteksi jika link masih default/belum di-setting
-        if (url.includes("LINK_KAMU") || url.includes("@username")) {
-            event.preventDefault(); // Mencegah link terbuka
-            showToast("Link belum di-setting oleh Admin!", true);
+    // Initial Animation
+    gsap.from("#mainCard", { duration: 1.2, y: 50, opacity: 0, ease: "expo.out" });
+
+    function toggleTheme() {
+        const body = document.body;
+        const icon = document.getElementById("themeIcon");
+        body.classList.toggle("light-mode");
+        
+        if(body.classList.contains("light-mode")) {
+            icon.classList.replace("fa-moon", "fa-sun");
+            gsap.to(body, {backgroundColor: "#f8fafc", duration: 0.5});
+        } else {
+            icon.classList.replace("fa-sun", "fa-moon");
+            gsap.to(body, {backgroundColor: "#020617", duration: 0.5});
         }
     }
 
-    function openForm(){
-        document.getElementById("menu").classList.add("hidden");
-        document.getElementById("form").classList.remove("hidden");
+    function navigate(target) {
+        const menu = document.getElementById("menuContent");
+        const form = document.getElementById("formContent");
+
+        if(target === 'form') {
+            gsap.to(menu, { x: -20, opacity: 0, duration: 0.3, onComplete: () => {
+                menu.classList.add("hidden");
+                form.classList.remove("hidden");
+                gsap.fromTo(form, {x: 20, opacity: 0}, {x: 0, opacity: 1, duration: 0.4});
+            }});
+        } else {
+            gsap.to(form, { x: 20, opacity: 0, duration: 0.3, onComplete: () => {
+                form.classList.add("hidden");
+                menu.classList.remove("hidden");
+                gsap.fromTo(menu, {x: -20, opacity: 0}, {x: 0, opacity: 1, duration: 0.4});
+            }});
+        }
     }
 
-    function backMenu(){
-        document.getElementById("form").classList.add("hidden");
-        document.getElementById("menu").classList.remove("hidden");
-    }
-
-    function setType(type){
-        selectedType = type;
-        const kritikBtn = document.getElementById("kritikBtn");
-        const saranBtn = document.getElementById("saranBtn");
-
-        [kritikBtn, saranBtn].forEach(btn => {
-            btn.classList.remove("bg-indigo-600", "border-indigo-400");
-            btn.classList.add("bg-white/5", "border-white/5");
-        });
-
-        const activeBtn = type === "Kritik" ? kritikBtn : saranBtn;
-        activeBtn.classList.remove("bg-white/5", "border-white/5");
-        activeBtn.classList.add("bg-indigo-600", "border-indigo-400");
-    }
-
-    function showToast(msg, isError = false){
-        const t = document.getElementById("toast");
-        t.innerHTML = isError ? `<i class="fa-solid fa-triangle-exclamation mr-2 text-yellow-400"></i> ${msg}` : `<i class="fa-solid fa-circle-check mr-2 text-green-400"></i> ${msg}`;
-        t.classList.remove("hidden");
+    function setType(type) {
+        currentType = type;
+        const k = document.getElementById("kBtn");
+        const s = document.getElementById("sBtn");
         
+        [k, s].forEach(el => el.classList.replace("bg-indigo-600", "bg-white/5"));
+        (type === 'Kritik' ? k : s).classList.replace("bg-white/5", "bg-indigo-600");
+        gsap.from((type === 'Kritik' ? k : s), {scale: 0.9, duration: 0.2});
+    }
+
+    function toast(text, color = "bg-indigo-600") {
+        const t = document.getElementById("toast");
+        t.innerText = text;
+        t.className = `fixed bottom-10 left-1/2 -translate-x-1/2 px-8 py-4 rounded-2xl text-sm font-bold toast-active z-[100] shadow-2xl text-white ${color}`;
+        t.classList.remove("hidden");
         setTimeout(() => t.classList.add("hidden"), 3000);
     }
 
-    async function kirimPesan(){
-        const pesanEl = document.getElementById("pesan");
-        const btn = document.getElementById("sendBtn");
-        const webhookURL = "WEBHOOK_KAMU"; 
+    async function handleSend() {
+        const msg = document.getElementById("msgBox").value;
+        const btn = document.getElementById("submitBtn");
 
-        if(!selectedType) return showToast("Pilih tipe masukan!", true);
-        if(!pesanEl.value.trim()) return showToast("Pesan masih kosong!", true);
-        if(webhookURL === "WEBHOOK_KAMU") return showToast("Webhook belum di-setting!", true);
+        if(!currentType) return toast("⚠️ Pilih tipe masukan!", "bg-orange-500");
+        if(!msg.trim()) return toast("⚠️ Isi pesanmu dulu!", "bg-orange-500");
 
-        btn.innerHTML = '<i class="fa-solid fa-circle-notch animate-spin"></i>';
         btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner animate-spin"></i>';
 
         try {
-            await fetch(webhookURL, {
+            await fetch(webhook, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
                     embeds: [{
-                        title: `📩 ${selectedType}`,
-                        description: pesanEl.value,
-                        color: selectedType === "Kritik" ? 15548997 : 5763719,
-                        footer: { text: "Echo Lounge Feedback" }
+                        title: `✨ Feedback: ${currentType}`,
+                        description: `**Pesan:**\n${msg}`,
+                        color: currentType === "Kritik" ? 15548997 : 5763719,
+                        timestamp: new Date()
                     }]
                 })
             });
-            showToast("Berhasil dikirim!");
-            pesanEl.value = "";
-            setTimeout(backMenu, 1500);
+            toast("🚀 Berhasil Dikirim!");
+            document.getElementById("msgBox").value = "";
+            setTimeout(() => navigate('menu'), 1000);
         } catch {
-            showToast("Gagal terhubung ke Webhook!", true);
+            toast("❌ Gagal Mengirim", "bg-red-600");
         }
-        btn.innerHTML = "Kirim Sekarang";
         btn.disabled = false;
+        btn.innerText = "KIRIM PESAN";
     }
 </script>
 
