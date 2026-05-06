@@ -1,187 +1,87 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sean | Profile</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-
-<style>
-body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    background: #020617;
-    overflow-x: hidden;
-}
-
-/* Animated Gradient BG */
-.bg-anim {
-    position: fixed;
-    inset: 0;
-    background: linear-gradient(270deg, #3b82f6, #9333ea, #0ea5e9);
-    background-size: 600% 600%;
-    animation: gradientMove 15s ease infinite;
-    opacity: 0.15;
-    z-index: -1;
-}
-
-@keyframes gradientMove {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-}
-
-/* Glass */
-.glass {
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(14px);
-    border: 1px solid rgba(255,255,255,0.08);
-}
-
-/* Link Card */
-.link-card {
-    transition: all 0.25s ease;
-}
-.link-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 10px 40px rgba(59,130,246,0.25);
-    border: 1px solid rgba(59,130,246,0.3);
-}
-
-/* Avatar Glow */
-.avatar {
-    position: relative;
-}
-.avatar::before {
-    content: "";
-    position: absolute;
-    inset: -10px;
-    border-radius: 30px;
-    background: linear-gradient(135deg,#3b82f6,#9333ea);
-    filter: blur(25px);
-    opacity: 0.6;
-    z-index: -1;
-}
-
-/* Button press */
-.btn:active {
-    transform: scale(0.95);
-}
-
-/* Reveal */
-.reveal {
-    opacity: 0;
-    transform: translateY(20px);
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Echo Lounge</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<body class="bg-black text-white font-sans">
 
-<body>
+  <!-- Container -->
+  <div class="min-h-screen flex flex-col items-center justify-center px-4">
 
-<div class="bg-anim"></div>
+    <!-- Logo -->
+    <img src="logo.png" alt="Echo Lounge" class="w-28 mb-6">
 
-<main class="min-h-screen flex items-center justify-center px-4">
-<div class="w-full max-w-md space-y-8 text-center">
+    <!-- Title -->
+    <h1 class="text-3xl font-bold mb-2">Echo Lounge</h1>
+    <p class="text-gray-400 mb-6 text-center">Welcome to our Discord community</p>
 
-    <!-- Avatar -->
-    <div class="flex justify-center reveal">
-        <div class="avatar w-28 h-28 rounded-[30px] overflow-hidden">
-            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sean">
-        </div>
-    </div>
+    <!-- Buttons -->
+    <div class="w-full max-w-xs space-y-3">
+      
+      <!-- Discord -->
+      <a href="https://discord.gg/LINK_KAMU"
+         class="block w-full text-center bg-indigo-600 hover:bg-indigo-700 py-3 rounded-xl transition">
+         Join Discord
+      </a>
 
-    <!-- Name -->
-    <div class="reveal">
-        <h1 class="text-4xl font-extrabold text-white">SEAN</h1>
-        <p class="text-slate-400 text-sm">Seannz • Digital Creator</p>
-    </div>
-
-    <!-- Links -->
-    <div class="space-y-3">
-
-        <a href="#" onclick="checkLink(event,this)" 
-        class="link-card glass p-4 rounded-2xl flex justify-between items-center reveal">
-            <span class="font-semibold">WhatsApp</span>
-            <i data-lucide="arrow-right"></i>
-        </a>
-
-        <a href="#" onclick="checkLink(event,this)" 
-        class="link-card glass p-4 rounded-2xl flex justify-between items-center reveal">
-            <span class="font-semibold">Instagram</span>
-            <i data-lucide="lock"></i>
-        </a>
-
-        <a href="https://discord.gg/jRkcCFdT4T"
-        class="link-card glass p-4 rounded-2xl flex justify-between items-center reveal">
-            <span class="font-semibold">Discord Server</span>
-            <i data-lucide="external-link"></i>
-        </a>
+      <!-- TikTok -->
+      <a href="https://tiktok.com/@username"
+         class="block w-full text-center bg-pink-600 hover:bg-pink-700 py-3 rounded-xl transition">
+         TikTok
+      </a>
 
     </div>
 
-    <!-- Contact -->
-    <form id="contactForm" class="space-y-3 reveal">
-        <input id="name" placeholder="Nama..."
-        class="w-full p-3 rounded-xl bg-white/5 border border-white/10 outline-none">
+    <!-- Kritik & Saran -->
+    <div class="w-full max-w-xs mt-8">
+      <h2 class="text-lg mb-2">Kritik & Saran</h2>
+      
+      <textarea id="pesan"
+        class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none"
+        placeholder="Tulis pesan kamu..."></textarea>
 
-        <textarea id="message" placeholder="Pesan..."
-        class="w-full p-3 rounded-xl bg-white/5 border border-white/10 outline-none"></textarea>
+      <button onclick="kirimPesan()"
+        class="w-full mt-3 bg-green-600 hover:bg-green-700 py-3 rounded-xl transition">
+        Kirim
+      </button>
+    </div>
 
-        <button class="btn w-full py-3 rounded-xl bg-blue-600 text-white font-bold flex justify-center gap-2">
-            Kirim <i data-lucide="send"></i>
-        </button>
-    </form>
+  </div>
 
-</div>
-</main>
+  <script>
+    async function kirimPesan() {
+      const pesan = document.getElementById("pesan").value;
 
-<script>
-lucide.createIcons();
+      if (!pesan) {
+        alert("Isi pesan dulu!");
+        return;
+      }
 
-// reveal animation
-gsap.to(".reveal", {
-    opacity:1,
-    y:0,
-    duration:0.8,
-    stagger:0.1
-});
+      const webhookURL = "WEBHOOK_KAMU_DISINI";
 
-// link check
-function checkLink(e, el){
-    if(el.getAttribute("href") === "#"){
-        e.preventDefault();
-        alert("Link belum di set");
+      const data = {
+        content: "📩 **Kritik & Saran Baru (Echo Lounge)**\n" + pesan
+      };
+
+      try {
+        await fetch(webhookURL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        });
+
+        alert("Pesan berhasil dikirim!");
+        document.getElementById("pesan").value = "";
+      } catch (error) {
+        alert("Gagal kirim pesan!");
+      }
     }
-}
-
-// webhook (optional)
-const WEBHOOK = "ISI_WEBHOOK";
-
-document.getElementById("contactForm").onsubmit = async(e)=>{
-    e.preventDefault();
-
-    const name = document.getElementById("name").value;
-    const msg = document.getElementById("message").value;
-
-    if(!name || !msg){
-        return alert("Isi dulu");
-    }
-
-    await fetch(WEBHOOK,{
-        method:"POST",
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({
-            content:`${name}: ${msg}`
-        })
-    });
-
-    alert("Terkirim!");
-};
-</script>
+  </script>
 
 </body>
-    </html>
+</html>
