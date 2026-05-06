@@ -9,74 +9,97 @@
 
 <style>
 body {
-  background: linear-gradient(135deg, #020617, #0f172a);
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  overflow: hidden;
 }
 
+/* GLASS */
 .glass {
-  background: rgba(255,255,255,0.04);
-  backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(14px);
   border: 1px solid rgba(255,255,255,0.08);
 }
 
-.fade {
-  animation: fade 0.3s ease;
+/* BUTTON */
+.btn {
+  transition: all 0.25s ease;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+.btn:active {
+  transform: scale(0.97);
 }
 
+/* FADE */
+.fade {
+  animation: fade 0.4s ease;
+}
 @keyframes fade {
-  from {opacity: 0; transform: translateY(10px);}
-  to {opacity: 1; transform: translateY(0);}
+  from {opacity:0; transform: translateY(15px);}
+  to {opacity:1; transform: translateY(0);}
+}
+
+/* TOAST */
+.toast-show {
+  animation: toastIn 0.4s ease forwards;
+}
+.toast-hide {
+  animation: toastOut 0.3s ease forwards;
+}
+
+@keyframes toastIn {
+  from {opacity:0; transform: translateY(30px) scale(0.9);}
+  to {opacity:1; transform: translateY(0) scale(1);}
+}
+
+@keyframes toastOut {
+  to {opacity:0; transform: translateY(20px) scale(0.9);}
 }
 </style>
 </head>
 
 <body class="text-white flex items-center justify-center min-h-screen px-4">
 
-<div class="glass rounded-2xl p-6 w-full max-w-sm text-center">
+<div class="glass rounded-2xl p-6 w-full max-w-sm text-center fade">
 
-  <!-- LOGO -->
+  <!-- LOGO FIX -->
   <img src="logo.png"
-       class="w-24 mx-auto mb-4">
+       onerror="this.src='https://i.imgur.com/7yUvePI.png'"
+       class="w-20 mx-auto mb-4 rounded-lg shadow-lg">
 
-  <h1 class="text-2xl font-bold">Echo Lounge</h1>
+  <h1 class="text-2xl font-semibold">Echo Lounge</h1>
   <p class="text-gray-400 text-sm mb-6">Discord Community</p>
 
-  <!-- MENU UTAMA -->
-  <div id="menuUtama" class="space-y-3 fade">
+  <!-- MENU -->
+  <div id="menu" class="space-y-3 fade">
 
-    <!-- DISCORD -->
     <a href="https://discord.gg/LINK_KAMU"
-       class="flex items-center justify-center gap-2 py-3 rounded-xl bg-[#5865F2] hover:opacity-90 transition">
-
+       class="btn flex items-center justify-center gap-2 py-3 rounded-xl bg-[#5865F2]">
+       
       <!-- ICON DISCORD -->
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 24 24">
-        <path d="M20.317 4.369A19.791 19.791 0 0016.885 3c-.162.29-.35.682-.48.987a18.27 18.27 0 00-5.81 0 10.32 10.32 0 00-.487-.987 19.736 19.736 0 00-3.435 1.372C3.873 9.045 3.206 13.579 3.53 18.057a19.904 19.904 0 006.036 3.06c.487-.667.92-1.37 1.295-2.11-.71-.267-1.387-.6-2.02-.985.17-.124.335-.252.495-.384 3.9 1.83 8.13 1.83 11.984 0 .16.132.325.26.495.384-.633.386-1.31.718-2.02.985.375.74.808 1.443 1.295 2.11a19.87 19.87 0 006.036-3.06c.376-5.177-.636-9.67-2.808-13.688zM9.545 15.995c-1.18 0-2.15-1.08-2.15-2.407 0-1.327.946-2.407 2.15-2.407 1.21 0 2.17 1.09 2.15 2.407 0 1.327-.946 2.407-2.15 2.407zm4.91 0c-1.18 0-2.15-1.08-2.15-2.407 0-1.327.946-2.407 2.15-2.407 1.21 0 2.17 1.09 2.15 2.407 0 1.327-.946 2.407-2.15 2.407z"/>
-      </svg>
-
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" class="w-5">
       Join Discord
     </a>
 
-    <!-- TIKTOK -->
     <a href="https://tiktok.com/@username"
-       class="flex items-center justify-center gap-2 py-3 rounded-xl bg-black border border-gray-700 hover:bg-gray-900 transition">
-
+       class="btn flex items-center justify-center gap-2 py-3 rounded-xl bg-black border border-gray-700">
+       
       <!-- ICON TIKTOK -->
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 24 24">
-        <path d="M12.75 2h2.5c.09 1.3.54 2.58 1.42 3.6.88 1.01 2.07 1.74 3.33 2.08v2.6c-1.52-.04-3-.45-4.27-1.2v5.92c0 3.01-2.44 5.45-5.45 5.45A5.45 5.45 0 015 15.99c0-3.01 2.44-5.45 5.45-5.45.34 0 .67.03.99.09v2.7a2.75 2.75 0 00-.99-.18 2.76 2.76 0 000 5.52 2.76 2.76 0 002.76-2.76V2z"/>
-      </svg>
-
+      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046126.png" class="w-5">
       TikTok
     </a>
 
-    <!-- MENU KRITIK -->
     <button onclick="openForm()"
-      class="w-full py-3 rounded-xl bg-gray-800 hover:bg-gray-700 transition">
-      💬 Kirim Kritik & Saran
+      class="btn w-full py-3 rounded-xl bg-gray-800 hover:bg-gray-700">
+      💬 Kritik & Saran
     </button>
 
   </div>
 
   <!-- FORM -->
-  <div id="formBox" class="hidden fade">
+  <div id="form" class="hidden fade">
 
     <button onclick="backMenu()" class="text-sm text-gray-400 mb-3">
       ← Kembali
@@ -95,7 +118,7 @@ body {
       placeholder="Tulis pesan..."></textarea>
 
     <button onclick="kirimPesan()"
-      class="w-full mt-3 py-3 rounded-xl bg-green-600 hover:bg-green-700">
+      class="btn w-full mt-3 py-3 rounded-xl bg-green-600">
       Kirim
     </button>
 
@@ -105,43 +128,44 @@ body {
 
 <!-- TOAST -->
 <div id="toast"
-  class="hidden fixed bottom-5 left-1/2 -translate-x-1/2 bg-black px-4 py-2 rounded-lg text-sm border border-gray-700">
+  class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 rounded-lg text-sm glass">
 </div>
 
 <script>
 let selectedType = null;
 
 function openForm() {
-  document.getElementById("menuUtama").classList.add("hidden");
-  document.getElementById("formBox").classList.remove("hidden");
+  menu.classList.add("hidden");
+  form.classList.remove("hidden");
 }
 
 function backMenu() {
-  document.getElementById("formBox").classList.add("hidden");
-  document.getElementById("menuUtama").classList.remove("hidden");
+  form.classList.add("hidden");
+  menu.classList.remove("hidden");
 }
 
 function setType(type) {
   selectedType = type;
 
-  document.getElementById("kritikBtn").classList.remove("bg-indigo-600");
-  document.getElementById("saranBtn").classList.remove("bg-indigo-600");
+  kritikBtn.classList.remove("bg-indigo-600");
+  saranBtn.classList.remove("bg-indigo-600");
 
-  if (type === "Kritik") {
-    document.getElementById("kritikBtn").classList.add("bg-indigo-600");
-  } else {
-    document.getElementById("saranBtn").classList.add("bg-indigo-600");
-  }
+  if (type === "Kritik") kritikBtn.classList.add("bg-indigo-600");
+  else saranBtn.classList.add("bg-indigo-600");
 }
 
 function showToast(msg) {
-  const toast = document.getElementById("toast");
-  toast.innerText = msg;
-  toast.classList.remove("hidden");
+  const t = document.getElementById("toast");
+  t.innerText = msg;
+  t.classList.remove("hidden", "toast-hide");
+  t.classList.add("toast-show");
 
   setTimeout(() => {
-    toast.classList.add("hidden");
-  }, 2500);
+    t.classList.remove("toast-show");
+    t.classList.add("toast-hide");
+
+    setTimeout(() => t.classList.add("hidden"), 300);
+  }, 2200);
 }
 
 async function kirimPesan() {
@@ -156,26 +180,25 @@ async function kirimPesan() {
     embeds: [{
       title: `📩 ${selectedType}`,
       description: pesan,
-      color: selectedType === "Kritik" ? 16711680 : 65280,
-      timestamp: new Date()
+      color: selectedType === "Kritik" ? 16711680 : 65280
     }]
   };
 
   try {
     await fetch(webhookURL, {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: {"Content-Type":"application/json"},
       body: JSON.stringify(data)
     });
 
-    showToast("Terkirim!");
-    document.getElementById("pesan").value = "";
+    showToast("Berhasil dikirim 🚀");
+    pesan.value = "";
 
   } catch {
-    showToast("Gagal kirim!");
+    showToast("Gagal kirim ❌");
   }
 }
 </script>
 
 </body>
-</html>
+  </html>
