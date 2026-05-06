@@ -9,55 +9,77 @@
 
 <style>
 body {
-  background: radial-gradient(circle at top, #0b1220, #020617);
+  margin:0;
+  background: #020617;
+  overflow:hidden;
+  font-family:sans-serif;
+}
+
+/* PARTICLE CANVAS */
+#bg {
+  position:fixed;
+  width:100%;
+  height:100%;
+  z-index:-1;
 }
 
 /* CARD */
 .card {
+  position:relative;
   background: rgba(255,255,255,0.05);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  border-radius: 24px;
+  border:1px solid rgba(255,255,255,0.08);
+  padding:28px;
+  width:100%;
+  max-width:360px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+  overflow:hidden;
 }
 
-/* LOGO */
-.logo {
-  background: linear-gradient(135deg,#1e293b,#020617);
-  padding: 14px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+/* LIGHT EFFECT */
+.card::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background: radial-gradient(circle at var(--x) var(--y),
+    rgba(99,102,241,0.25), transparent 40%);
+  opacity:0;
+  transition:0.3s;
+}
+.card:hover::before {
+  opacity:1;
 }
 
 /* BUTTON */
 .btn {
-  transition: 0.25s;
+  transition:0.25s;
 }
 .btn:hover {
   transform: translateY(-3px);
+  box-shadow:0 10px 25px rgba(0,0,0,0.5);
 }
 .btn:active {
-  transform: scale(0.96);
+  transform:scale(0.96);
 }
 
 /* TOAST */
 .toast {
   backdrop-filter: blur(16px);
   background: rgba(0,0,0,0.6);
-  border: 1px solid rgba(255,255,255,0.1);
-  animation: toastIn 0.4s ease;
+  border:1px solid rgba(255,255,255,0.1);
+  animation:fadeIn 0.4s;
 }
-
-@keyframes toastIn {
+@keyframes fadeIn {
   from {opacity:0; transform:translateY(30px);}
   to {opacity:1; transform:translateY(0);}
 }
 
 .progress {
-  height: 3px;
-  background: linear-gradient(to right,#22c55e,#4ade80);
-  animation: load 2.2s linear forwards;
+  height:3px;
+  background:linear-gradient(to right,#22c55e,#4ade80);
+  animation:load 2.5s linear forwards;
 }
-
 @keyframes load {
   from {width:100%;}
   to {width:0;}
@@ -65,16 +87,18 @@ body {
 </style>
 </head>
 
-<body class="text-white flex items-center justify-center min-h-screen px-4">
+<body>
 
-<div class="card rounded-3xl p-7 w-full max-w-sm text-center">
+<canvas id="bg"></canvas>
+
+<div class="flex items-center justify-center min-h-screen px-4 text-white">
+
+<div class="card text-center" id="card">
 
   <!-- LOGO -->
-  <div class="logo inline-block mb-4">
-    <img src="logo.png"
-         onerror="this.src='https://i.imgur.com/7yUvePI.png'"
-         class="w-16">
-  </div>
+  <img src="logo.png"
+       onerror="this.src='https://i.imgur.com/7yUvePI.png'"
+       class="w-16 mx-auto mb-4">
 
   <h1 class="text-2xl font-semibold">Echo Lounge</h1>
   <p class="text-gray-400 text-sm mb-6">Discord Community</p>
@@ -117,7 +141,7 @@ body {
     </div>
 
     <textarea id="pesan"
-      class="w-full p-3 rounded-lg bg-black/40 border border-gray-700 focus:outline-none"
+      class="w-full p-3 rounded-lg bg-black/40 border border-gray-700"
       placeholder="Tulis pesan..."></textarea>
 
     <button onclick="kirimPesan()"
@@ -128,18 +152,59 @@ body {
   </div>
 
 </div>
+</div>
 
 <!-- TOAST -->
 <div id="toast"
- class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-64 rounded-xl overflow-hidden toast">
-
-  <div class="p-3 text-sm text-center" id="toastMsg"></div>
+ class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-64 rounded-xl overflow-hidden toast text-white">
+  <div class="p-3 text-center text-sm" id="toastMsg"></div>
   <div class="progress"></div>
-
 </div>
 
 <script>
-let selectedType = null;
+/* PARTICLES */
+const c = document.getElementById("bg");
+const ctx = c.getContext("2d");
+
+c.width = innerWidth;
+c.height = innerHeight;
+
+let particles = [];
+
+for(let i=0;i<60;i++){
+  particles.push({
+    x:Math.random()*c.width,
+    y:Math.random()*c.height,
+    r:Math.random()*2,
+    dx:(Math.random()-0.5),
+    dy:(Math.random()-0.5)
+  });
+}
+
+function draw(){
+  ctx.clearRect(0,0,c.width,c.height);
+  particles.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle="rgba(255,255,255,0.2)";
+    ctx.fill();
+    p.x+=p.dx;
+    p.y+=p.dy;
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+
+/* LIGHT FOLLOW CURSOR */
+document.addEventListener("mousemove",(e)=>{
+  const card = document.getElementById("card");
+  const rect = card.getBoundingClientRect();
+  card.style.setProperty('--x', e.clientX - rect.left + "px");
+  card.style.setProperty('--y', e.clientY - rect.top + "px");
+});
+
+/* FORM */
+let selectedType=null;
 
 function openForm(){
   menu.classList.add("hidden");
@@ -152,34 +217,31 @@ function backMenu(){
 }
 
 function setType(type){
-  selectedType = type;
+  selectedType=type;
   kritikBtn.classList.remove("bg-indigo-600");
   saranBtn.classList.remove("bg-indigo-600");
-
   if(type==="Kritik") kritikBtn.classList.add("bg-indigo-600");
   else saranBtn.classList.add("bg-indigo-600");
 }
 
+/* TOAST */
 function showToast(msg){
-  const t = document.getElementById("toast");
-  document.getElementById("toastMsg").innerText = msg;
-
+  const t=document.getElementById("toast");
+  toastMsg.innerText=msg;
   t.classList.remove("hidden");
-
-  setTimeout(()=>{
-    t.classList.add("hidden");
-  },2200);
+  setTimeout(()=>t.classList.add("hidden"),2500);
 }
 
+/* SEND */
 async function kirimPesan(){
-  const pesan = document.getElementById("pesan").value;
+  const pesan=document.getElementById("pesan").value;
 
   if(!selectedType) return showToast("Pilih dulu!");
   if(!pesan) return showToast("Isi pesan dulu!");
 
-  const webhookURL = "WEBHOOK_KAMU";
+  const webhookURL="WEBHOOK_KAMU";
 
-  const data = {
+  const data={
     embeds:[{
       title:`📩 ${selectedType}`,
       description:pesan,
@@ -194,8 +256,8 @@ async function kirimPesan(){
       body:JSON.stringify(data)
     });
 
-    showToast("Berhasil dikirim 🚀");
-    document.getElementById("pesan").value="";
+    showToast("Berhasil 🚀");
+    pesan.value="";
 
   }catch{
     showToast("Gagal ❌");
