@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echo Lounge | Connect</title>
+    <title>Echo Lounge | Premium Connect</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,183 +13,229 @@
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
 
         :root {
-            --bg: #05070a;
-            --card: #0d1117;
+            --bg: #030712;
+            --card-bg: rgba(17, 24, 39, 0.7);
             --accent: #6366f1;
-            --text: #ffffff;
-            --input-bg: rgba(255, 255, 255, 0.05);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --input-bg: rgba(0, 0, 0, 0.4);
         }
 
         .light-mode {
-            --bg: #f8fafc;
-            --card: #ffffff;
+            --bg: #f1f5f9;
+            --card-bg: rgba(255, 255, 255, 0.8);
             --accent: #4f46e5;
-            --text: #0f172a;
-            --input-bg: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --input-bg: #ffffff;
         }
 
         body {
             background-color: var(--bg);
-            color: var(--text);
+            color: var(--text-primary);
             font-family: 'Plus Jakarta Sans', sans-serif;
-            transition: all 0.5s ease;
+            transition: background 0.5s ease;
             overflow: hidden;
         }
 
-        .glass-card {
-            background: var(--card);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 40px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        /* Abstract Background Glow */
+        .glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(60px);
         }
 
-        .light-mode .glass-card {
+        .glass-container {
+            background: var(--card-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 48px;
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.5);
+        }
+
+        .light-mode .glass-container {
             border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.1);
         }
 
-        /* Teks Input agar selalu kelihatan */
-        textarea, input {
+        /* Input Fix: Teks harus Putih di Dark Mode */
+        textarea {
             background: var(--input-bg) !important;
-            color: var(--text) !important;
+            color: var(--text-primary) !important;
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            transition: all 0.3s ease;
         }
-        .light-mode textarea {
-            border: 1px solid rgba(0, 0, 0, 0.1) !important;
-        }
+        textarea:focus { border-color: var(--accent) !important; }
 
-        .btn-action {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .btn-premium {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .btn-action:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.2);
-            box-shadow: 0 10px 20px -5px var(--accent);
+        .btn-premium:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 15px 30px -10px var(--accent);
         }
+        .btn-premium:active { transform: scale(0.96); }
 
-        .toast-ui {
-            animation: slideUp 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
-            background: #1e293b;
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        /* Fancy Notification */
+        #toast {
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
+        #toast.active { bottom: 40px; }
+
     </style>
 </head>
 <body class="flex justify-center items-center min-h-screen px-6">
 
-    <button onclick="toggleTheme()" class="fixed top-8 right-8 w-12 h-12 flex items-center justify-center rounded-2xl bg-white/5 border border-white/10 z-50 transition-transform active:scale-90">
-        <i id="tIcon" class="fas fa-moon text-indigo-400"></i>
+    <div class="glow" style="top: -10%; left: -10%;"></div>
+    <div class="glow" style="bottom: -10%; right: -10%;"></div>
+
+    <button onclick="toggleTheme()" class="fixed top-8 right-8 w-14 h-14 glass-container flex items-center justify-center z-50 hover:rotate-12 transition-transform">
+        <i id="themeIcon" class="fas fa-moon text-indigo-400 text-xl"></i>
     </button>
 
-    <div class="glass-card w-full max-w-[380px] p-10 relative text-center">
-        <div id="pfpArea" class="relative inline-block mb-8">
-            <div class="absolute inset-0 bg-indigo-500 blur-3xl opacity-20"></div>
-            <img src="https://i.imgur.com/7yUvePI.png" 
-                 class="w-24 h-24 mx-auto rounded-[2.5rem] relative border-4 border-indigo-500/20 shadow-2xl p-1 bg-white" 
-                 alt="EC Logo">
+    <div class="glass-container w-full max-w-[400px] p-10 text-center relative overflow-hidden" id="mainWrapper">
+        
+        <div id="headerSection">
+            <div class="relative inline-block mb-8 group">
+                <div class="absolute inset-0 bg-indigo-600 blur-3xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                <div class="w-28 h-28 bg-white p-2 rounded-[2.5rem] shadow-2xl relative border border-white/20">
+                    <img src="https://i.imgur.com/7yUvePI.png" class="w-full h-full object-contain rounded-[2rem]" alt="Profile">
+                </div>
+            </div>
+            <h1 class="text-4xl font-extrabold tracking-tighter mb-2">Echo Lounge</h1>
+            <p class="text-sm font-semibold tracking-[0.2em] opacity-40 uppercase mb-10">Connected Excellence</p>
         </div>
 
-        <h1 class="text-3xl font-extrabold tracking-tight mb-2">Echo Lounge</h1>
-        <p class="text-sm opacity-50 font-medium mb-10 tracking-wide uppercase">Community Hub</p>
-
-        <div id="menuGroup" class="space-y-4">
-            <a href="https://discord.gg/jRkcCFdT4T" target="_blank"
-               class="btn-action flex items-center justify-center gap-3 py-4 rounded-2xl bg-[#5865F2] font-bold text-white">
-                <i class="fab fa-discord text-xl"></i> Join Server
+        <div id="menuView" class="space-y-4">
+            <a href="https://discord.gg/jRkcCFdT4T" target="_blank" 
+               class="btn-premium flex items-center justify-between px-8 py-5 rounded-[2rem] bg-[#5865F2] text-white group">
+                <div class="flex items-center gap-4">
+                    <i class="fab fa-discord text-2xl"></i>
+                    <span class="font-bold">Discord Community</span>
+                </div>
+                <i class="fas fa-arrow-right opacity-40 group-hover:translate-x-2 transition-transform"></i>
             </a>
 
             <a href="https://tiktok.com/@sean_logs" target="_blank"
-               class="btn-action flex items-center justify-center gap-3 py-4 rounded-2xl bg-slate-800/50 border border-white/5 font-bold">
-                <i class="fab fa-tiktok text-xl"></i> TikTok
+               class="btn-premium flex items-center justify-between px-8 py-5 rounded-[2rem] bg-white/5 border border-white/10 group">
+                <div class="flex items-center gap-4">
+                    <i class="fab fa-tiktok text-2xl"></i>
+                    <span class="font-bold">TikTok Feed</span>
+                </div>
+                <i class="fas fa-arrow-up-right-from-square opacity-40 group-hover:-translate-y-1 transition-transform"></i>
             </a>
 
-            <button onclick="switchView('form')"
-                    class="btn-action w-full flex items-center justify-center gap-3 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 font-bold text-white mt-6">
-                <i class="fa-solid fa-comment-dots"></i> Kritik & Saran
+            <button onclick="changePage('form')" 
+                    class="btn-premium w-full py-5 rounded-[2rem] bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold mt-4 shadow-lg">
+                <i class="fa-solid fa-bolt mr-2"></i> Kirim Masukan
             </button>
         </div>
 
-        <div id="formGroup" class="hidden text-left">
-            <div class="flex items-center gap-4 mb-6">
-                <button onclick="switchView('menu')" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/5">
-                    <i class="fas fa-arrow-left"></i>
-                </button>
-                <span class="font-bold text-lg">Feedback</span>
+        <div id="formView" class="hidden text-left">
+            <button onclick="changePage('menu')" class="mb-8 flex items-center gap-2 font-bold text-xs opacity-40 hover:opacity-100 transition-all">
+                <i class="fas fa-chevron-left"></i> KEMBALI
+            </button>
+
+            <div class="grid grid-cols-2 gap-3 mb-6">
+                <button onclick="selectType('Kritik', this)" class="type-selector py-4 rounded-2xl bg-white/5 border border-white/5 font-bold text-[10px] tracking-widest uppercase hover:border-indigo-500 transition-all">🚨 Kritik</button>
+                <button onclick="selectType('Saran', this)" class="type-selector py-4 rounded-2xl bg-white/5 border border-white/5 font-bold text-[10px] tracking-widest uppercase hover:border-indigo-500 transition-all">💡 Saran</button>
             </div>
 
-            <div class="flex gap-2 mb-4">
-                <button onclick="setType('Kritik', this)" class="type-btn flex-1 py-3 rounded-xl bg-white/5 border border-white/10 font-bold text-[10px] uppercase tracking-widest transition-all">🚨 Kritik</button>
-                <button onclick="setType('Saran', this)" class="type-btn flex-1 py-3 rounded-xl bg-white/5 border border-white/10 font-bold text-[10px] uppercase tracking-widest transition-all">💡 Saran</button>
-            </div>
+            <textarea id="userInput" rows="5" class="w-full p-5 rounded-3xl outline-none text-sm leading-relaxed mb-6" placeholder="Tuliskan isi pikiranmu..."></textarea>
 
-            <textarea id="pesanInput" rows="4" 
-                      class="w-full p-4 rounded-2xl outline-none text-sm placeholder:opacity-30 mb-4" 
-                      placeholder="Apa yang ingin kamu sampaikan?"></textarea>
-
-            <button id="sendBtn" onclick="submitFeedback()"
-                    class="w-full py-4 rounded-2xl bg-indigo-600 font-extrabold text-white shadow-xl shadow-indigo-900/20 active:scale-95 transition-all">
-                KIRIM SEKARANG
+            <button id="submitBtn" onclick="handlePost()" class="w-full py-5 rounded-[2rem] bg-indigo-600 text-white font-extrabold shadow-2xl active:scale-95 transition-all">
+                KIRIM FEEDBACK
             </button>
         </div>
     </div>
 
-    <div id="toast" class="hidden fixed bottom-12 left-1/2 -translate-x-1/2 px-8 py-4 rounded-2xl font-bold shadow-2xl z-[100] toast-ui"></div>
+    <div id="toast" class="fixed px-8 py-5 rounded-[2rem] bg-slate-900 border border-white/10 shadow-2xl flex items-center gap-4 z-[100] min-w-[280px]">
+        <div id="toastStatus" class="w-10 h-10 rounded-full flex items-center justify-center"></div>
+        <div>
+            <h4 id="toastTitle" class="text-white font-bold text-sm">System</h4>
+            <p id="toastMsg" class="text-white/60 text-xs"></p>
+        </div>
+    </div>
 
     <script>
-        let feedbackType = "";
+        let currentType = "";
         const webhook = "https://discord.com/api/webhooks/1501586415941582918/ALwCGRA0veR8KS-Lrix7Gdeky7gPagBN_ViHmU-R4O0HKFLPUIT5jbGir0SEm9N1tm8j";
 
-        // Animasi Pembuka
-        gsap.from(".glass-card", { duration: 1, scale: 0.8, opacity: 0, ease: "back.out(1.7)" });
+        // Initial GSAP Animation
+        window.addEventListener('DOMContentLoaded', () => {
+            gsap.from("#mainWrapper", { duration: 1.5, y: 100, opacity: 0, ease: "expo.out" });
+            gsap.from("#headerSection > *", { duration: 1, y: 30, opacity: 0, stagger: 0.2, ease: "power4.out", delay: 0.5 });
+            gsap.from(".btn-premium", { duration: 1, x: -50, opacity: 0, stagger: 0.15, ease: "power4.out", delay: 0.8 });
+        });
 
         function toggleTheme() {
             document.body.classList.toggle("light-mode");
-            const isLight = document.body.classList.contains("light-mode");
-            document.getElementById("tIcon").className = isLight ? "fas fa-sun text-orange-400" : "fas fa-moon text-indigo-400";
+            const icon = document.getElementById("themeIcon");
+            if(document.body.classList.contains("light-mode")) {
+                icon.className = "fas fa-sun text-orange-500 text-xl";
+            } else {
+                icon.className = "fas fa-moon text-indigo-400 text-xl";
+            }
         }
 
-        function switchView(view) {
-            const menu = document.getElementById("menuGroup");
-            const form = document.getElementById("formGroup");
+        function changePage(page) {
+            const menu = document.getElementById("menuView");
+            const form = document.getElementById("formView");
 
-            if(view === 'form') {
-                gsap.to(menu, { opacity: 0, y: 20, duration: 0.3, onComplete: () => {
+            if(page === 'form') {
+                gsap.to(menu, { duration: 0.4, x: -100, opacity: 0, onComplete: () => {
                     menu.classList.add("hidden");
                     form.classList.remove("hidden");
-                    gsap.fromTo(form, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.4 });
+                    gsap.fromTo(form, { x: 100, opacity: 0 }, { duration: 0.6, x: 0, opacity: 1, ease: "expo.out" });
                 }});
             } else {
-                gsap.to(form, { opacity: 0, y: 20, duration: 0.3, onComplete: () => {
+                gsap.to(form, { duration: 0.4, x: 100, opacity: 0, onComplete: () => {
                     form.classList.add("hidden");
                     menu.classList.remove("hidden");
-                    gsap.fromTo(menu, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.4 });
+                    gsap.fromTo(menu, { x: -100, opacity: 0 }, { duration: 0.6, x: 0, opacity: 1, ease: "expo.out" });
                 }});
             }
         }
 
-        function setType(type, btn) {
-            feedbackType = type;
-            document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('bg-indigo-600', 'text-white'));
-            btn.classList.add('bg-indigo-600', 'text-white');
+        function selectType(val, el) {
+            currentType = val;
+            document.querySelectorAll('.type-selector').forEach(b => b.classList.remove('bg-indigo-600', 'border-indigo-400', 'text-white'));
+            el.classList.add('bg-indigo-600', 'border-indigo-400', 'text-white');
+            gsap.from(el, { scale: 0.9, duration: 0.3 });
         }
 
-        function showToast(text, isError = false) {
+        function triggerToast(title, msg, error = false) {
             const t = document.getElementById("toast");
-            t.innerText = text;
-            t.style.background = isError ? "#ef4444" : "#6366f1";
-            t.classList.remove("hidden");
-            setTimeout(() => t.classList.add("hidden"), 3000);
+            const s = document.getElementById("toastStatus");
+            document.getElementById("toastTitle").innerText = title;
+            document.getElementById("toastMsg").innerText = msg;
+
+            s.className = error ? "w-10 h-10 rounded-full bg-red-500/20 text-red-500 flex items-center justify-center" : "w-10 h-10 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center";
+            s.innerHTML = error ? '<i class="fas fa-times"></i>' : '<i class="fas fa-check"></i>';
+
+            t.classList.add("active");
+            setTimeout(() => t.classList.remove("active"), 4000);
         }
 
-        async function submitFeedback() {
-            const msg = document.getElementById("pesanInput").value;
-            const btn = document.getElementById("sendBtn");
+        async function handlePost() {
+            const text = document.getElementById("userInput").value;
+            const btn = document.getElementById("submitBtn");
 
-            if(!feedbackType) return showToast("Pilih kategori dulu!", true);
-            if(!msg.trim()) return showToast("Pesan masih kosong!", true);
+            if(!currentType) return triggerToast("Gagal", "Pilih jenis masukan dulu!", true);
+            if(!text.trim()) return triggerToast("Gagal", "Pesan tidak boleh kosong!", true);
 
             btn.disabled = true;
-            btn.innerText = "MENGIRIM...";
+            btn.innerHTML = '<i class="fas fa-spinner animate-spin"></i> MENGIRIM...';
 
             try {
                 await fetch(webhook, {
@@ -197,23 +243,23 @@
                     headers: {"Content-Type": "application/json"},
                     body: JSON.stringify({
                         embeds: [{
-                            title: `📩 Feedback: ${feedbackType}`,
-                            description: msg,
-                            color: feedbackType === "Kritik" ? 15548997 : 5763719,
-                            footer: { text: "Echo Lounge Hub" },
+                            title: `✨ Masukan Baru: ${currentType}`,
+                            description: text,
+                            color: currentType === "Kritik" ? 15548997 : 5763719,
+                            footer: { text: "Echo Lounge Analytics" },
                             timestamp: new Date()
                         }]
                     })
                 });
-                showToast("🚀 Terkirim ke Discord!");
-                document.getElementById("pesanInput").value = "";
-                setTimeout(() => switchView('menu'), 1000);
+                triggerToast("Berhasil!", "Pesanmu sudah mendarat di Discord.");
+                document.getElementById("userInput").value = "";
+                setTimeout(() => changePage('menu'), 2000);
             } catch {
-                showToast("❌ Gagal mengirim!", true);
+                triggerToast("Error", "Gagal menghubungi server.", true);
             }
             btn.disabled = false;
-            btn.innerText = "KIRIM SEKARANG";
+            btn.innerText = "KIRIM FEEDBACK";
         }
     </script>
 </body>
-</html>
+    </html>
