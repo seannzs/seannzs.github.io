@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echo Lounge | Premium Connect</title>
+    <title>Echo Lounge | Connect</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,271 +13,221 @@
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap');
 
         :root {
-            --accent: #6366f1;
-            --bg: #020617;
-            --card: rgba(15, 23, 42, 0.6);
-            --border: rgba(255, 255, 255, 0.08);
+            --bg: #020617; /* Ultra Dark Black-Blue */
+            --card-gradient-1: #0f172a;
+            --card-gradient-2: #1e293b;
+            --text-main: #ffffff;
+            --text-dim: rgba(255, 255, 255, 0.6);
+            --border-glass: rgba(255, 255, 255, 0.04);
+            --notif-bg: rgba(15, 23, 42, 0.95);
         }
 
         .light-mode {
-            --bg: #f1f5f9;
-            --card: rgba(255, 255, 255, 0.8);
-            --border: rgba(0, 0, 0, 0.05);
-            --accent: #4f46e5;
+            --bg: #f8fafc;
+            --card-gradient-1: #ffffff;
+            --card-gradient-2: #f1f5f9;
+            --text-main: #0f172a;
+            --text-dim: #64748b;
+            --border-glass: rgba(0, 0, 0, 0.04);
+            --notif-bg: rgba(255, 255, 255, 0.95);
         }
 
         body {
+            margin: 0;
             background-color: var(--bg);
+            color: var(--text-main);
             font-family: 'Space Grotesk', sans-serif;
             transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
         }
 
-        /* Border Cahaya Berputar */
-        .card-wrapper {
-            position: relative;
-            padding: 2px;
-            border-radius: 34px;
-            overflow: hidden;
-            background: linear-gradient(var(--border), var(--border));
-        }
-
-        .card-wrapper::before {
-            content: '';
-            position: absolute;
-            width: 150%;
-            height: 150%;
-            background: conic-gradient(transparent, var(--accent), transparent, var(--accent), transparent);
-            animation: rotate 6s linear infinite;
-            top: -25%; left: -25%;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
+        /* Glassmorphism Card with Smooth Gradient */
         .card {
-            background: var(--card);
-            backdrop-filter: blur(30px);
+            background: linear-gradient(135deg, var(--card-gradient-1), var(--card-gradient-2));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 32px;
-            position: relative;
-            z-index: 1;
+            border: 1px solid var(--border-glass);
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4);
         }
 
-        /* Tombol Modern */
-        .btn-modern {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        /* Minimalist Button Effect */
+        .btn-minimal {
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .btn-minimal:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        .btn-minimal:active { transform: scale(0.97); }
+
+        /* Smooth Toast Animation */
+        .toast-minimal {
+            backdrop-filter: blur(20px);
+            background: var(--notif-bg);
+            border: 1px solid var(--border-glass);
+            animation: slideInBottom 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
         }
 
-        .btn-modern::after {
-            content: '';
-            position: absolute;
-            background: rgba(255,255,255,0.1);
-            width: 100px; height: 100%;
-            left: -150px; top: 0;
-            transform: skewX(-20deg);
-            transition: 0.6s;
+        @keyframes slideInBottom {
+            from { transform: translate(-50%, 80px); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
         }
-
-        .btn-modern:hover::after { left: 120%; }
-
-        /* Custom Notification */
-        .notif {
-            position: fixed;
-            top: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-        .notif.active { top: 30px; }
-
     </style>
 </head>
-<body class="flex justify-center items-center min-h-screen px-6">
 
-    <div id="customNotif" class="notif flex items-center gap-4 px-6 py-4 rounded-2xl shadow-2xl border border-white/10 bg-slate-900/90 backdrop-blur-xl text-white">
-        <div id="notifIcon" class="w-10 h-10 rounded-full flex items-center justify-center bg-indigo-500 shadow-lg shadow-indigo-500/40">
-            <i class="fas fa-check"></i>
-        </div>
-        <div>
-            <p id="notifTitle" class="font-bold text-sm uppercase tracking-tighter">System</p>
-            <p id="notifMsg" class="text-xs opacity-70">Pesan berhasil diproses.</p>
-        </div>
+<body class="flex justify-center items-center min-h-screen px-4">
+
+<button onclick="toggleTheme()" class="fixed top-8 right-8 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all z-50">
+    <i id="themeIcon" class="fas fa-moon text-indigo-400"></i>
+</button>
+
+<div class="card w-full max-w-[380px] p-8 text-center relative overflow-hidden" id="mainCard">
+    <div class="relative inline-block mb-6 group">
+        <div class="absolute inset-0 bg-indigo-500 blur-2xl opacity-10 group-hover:opacity-20 transition-opacity duration-500"></div>
+        <img src="https://i.imgur.com/7yUvePI.png" 
+             class="w-24 h-24 mx-auto rounded-[2rem] relative border-2 border-white/20 shadow-2xl bg-white p-2"
+             alt="Logo">
     </div>
 
-    <div class="fixed top-8 right-8 flex gap-4 z-50">
-        <button onclick="toggleTheme()" class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-all">
-            <i id="tIcon" class="fas fa-moon text-indigo-400"></i>
+    <h1 class="text-3xl font-bold tracking-tighter mb-1">Echo Lounge</h1>
+    <div class="h-1 w-10 bg-indigo-500 mx-auto rounded-full mb-8"></div>
+
+    <div id="menuContent" class="space-y-4">
+        <a href="https://discord.gg/jRkcCFdT4T" target="_blank"
+           class="btn-minimal flex items-center justify-center gap-3 py-4 rounded-2xl bg-[#5865F2] font-bold text-white shadow-lg shadow-indigo-500/10">
+            <i class="fab fa-discord text-xl"></i>
+            Join Server
+        </a>
+
+        <a href="https://tiktok.com/@sean_logs" target="_blank"
+           class="btn-minimal flex items-center justify-center gap-3 py-4 rounded-2xl bg-white/5 border border-white/10 font-semibold hover:bg-white/10">
+            <i class="fab fa-tiktok text-xl"></i>
+            Follow TikTok
+        </a>
+
+        <button onclick="navigate('form')"
+                class="btn-minimal w-full flex items-center justify-center gap-3 py-4 rounded-2xl bg-white/5 border border-white/10 font-semibold hover:bg-white/10 mt-2">
+            <i class="fa-solid fa-comment-dots text-indigo-400"></i>
+            Kritik & Saran
         </button>
     </div>
 
-    <div class="card-wrapper shadow-[0_0_50px_-12px_rgba(99,102,241,0.3)]">
-        <div class="card w-full max-w-[400px] p-10 text-center overflow-hidden">
-            
-            <div id="headerArea">
-                <div class="relative inline-block mb-6 group">
-                    <div class="absolute inset-0 bg-indigo-500 blur-3xl opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
-                    <img src="https://i.imgur.com/7yUvePI.png" 
-                         class="w-24 h-24 mx-auto rounded-[2.5rem] relative border border-white/20 shadow-2xl bg-white p-2"
-                         alt="Logo">
-                </div>
-                <h1 class="text-3xl font-bold tracking-tighter mb-1">Echo Lounge</h1>
-                <div class="h-1 w-12 bg-indigo-500 mx-auto rounded-full mb-8"></div>
-            </div>
-
-            <div id="menuContent" class="space-y-4">
-                <a href="https://discord.gg/jRkcCFdT4T" target="_blank"
-                   class="btn-modern menu-item flex items-center justify-between px-6 py-5 rounded-2xl bg-[#5865F2] hover:shadow-[0_10px_30px_-10px_rgba(88,101,242,0.6)] group">
-                    <div class="flex items-center gap-4">
-                        <i class="fab fa-discord text-2xl"></i>
-                        <span class="font-bold">Discord Server</span>
-                    </div>
-                    <i class="fas fa-chevron-right text-xs opacity-50 group-hover:translate-x-1 transition-transform"></i>
-                </a>
-
-                <a href="https://tiktok.com/@sean_logs" target="_blank"
-                   class="btn-modern menu-item flex items-center justify-between px-6 py-5 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 group">
-                    <div class="flex items-center gap-4">
-                        <i class="fab fa-tiktok text-xl"></i>
-                        <span class="font-bold">TikTok Feed</span>
-                    </div>
-                    <i class="fas fa-external-link-alt text-xs opacity-50"></i>
-                </a>
-
-                <button onclick="changeSection('form')"
-                        class="btn-modern menu-item w-full flex items-center gap-4 px-6 py-5 rounded-2xl bg-gradient-to-r from-indigo-600/20 to-transparent border border-indigo-500/30 hover:border-indigo-500 transition-all">
-                    <i class="fa-solid fa-comment-alt text-indigo-400"></i>
-                    <span class="font-bold text-indigo-400">Kritik & Saran</span>
-                </button>
-            </div>
-
-            <div id="formContent" class="hidden text-left">
-                <button onclick="changeSection('menu')" class="mb-6 flex items-center gap-2 text-xs font-bold opacity-50 hover:opacity-100 transition-opacity uppercase tracking-widest">
-                    <i class="fas fa-arrow-left"></i> Kembali
-                </button>
-                
-                <div class="flex gap-2 mb-4">
-                    <button onclick="pickType('Kritik', this)" class="type-btn flex-1 py-3 rounded-xl bg-white/5 border border-white/10 text-[10px] font-bold uppercase tracking-widest hover:border-indigo-500 transition-all">🚨 Kritik</button>
-                    <button onclick="pickType('Saran', this)" class="type-btn flex-1 py-3 rounded-xl bg-white/5 border border-white/10 text-[10px] font-bold uppercase tracking-widest hover:border-indigo-500 transition-all">💡 Saran</button>
-                </div>
-
-                <textarea id="msg" class="w-full bg-black/40 border border-white/10 rounded-2xl p-4 text-sm focus:border-indigo-500 outline-none transition-all mb-4" rows="4" placeholder="Apa yang ingin Anda sampaikan?"></textarea>
-
-                <button id="submit" onclick="sendToDiscord()" class="w-full py-5 rounded-2xl bg-indigo-600 font-bold shadow-xl hover:shadow-indigo-500/20 active:scale-95 transition-all uppercase tracking-widest text-xs">
-                    Kirim Feedback
-                </button>
-            </div>
-
+    <div id="formContent" class="hidden text-left">
+        <div class="flex items-center mb-6">
+            <button onclick="navigate('menu')" class="p-2 hover:bg-white/5 rounded-full transition">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <span class="flex-1 font-bold mr-8 text-lg">Send Feedback</span>
         </div>
+
+        <div class="grid grid-cols-2 gap-3 mb-4">
+            <button onclick="setType('Kritik')" id="kBtn" class="py-2.5 rounded-xl bg-white/5 border border-white/5 transition-all text-xs font-bold uppercase tracking-widest hover:border-indigo-500">🚨 Kritik</button>
+            <button onclick="setType('Saran')" id="sBtn" class="py-2.5 rounded-xl bg-white/5 border border-white/5 transition-all text-xs font-bold uppercase tracking-widest hover:border-indigo-500">💡 Saran</button>
+        </div>
+
+        <textarea id="msg" rows="4"
+                  class="w-full p-4 rounded-xl bg-black/30 border border-white/10 focus:border-indigo-500 transition-all text-sm resize-none mb-4 outline-none"
+                  placeholder="Ketik pesanmu di sini..."></textarea>
+
+        <button id="submitBtn" onclick="sendToDiscord()"
+                class="btn-minimal w-full py-4 rounded-2xl bg-indigo-600 font-extrabold shadow-xl shadow-indigo-900/10 uppercase tracking-widest text-xs">
+            Submit
+        </button>
     </div>
+</div>
 
-    <script>
-        let selectedType = "";
-        const webhook = "https://discord.com/api/webhooks/1501586415941582918/ALwCGRA0veR8KS-Lrix7Gdeky7gPagBN_ViHmU-R4O0HKFLPUIT5jbGir0SEm9N1tm8j";
+<div id="toast" class="hidden fixed bottom-10 left-1/2 -translate-x-1/2 px-6 py-4 rounded-2xl text-sm font-bold toast-minimal z-[100] shadow-xl border border-white/10"></div>
 
-        // GSAP Intro
-        window.onload = () => {
-            const tl = gsap.timeline();
-            tl.from(".card-wrapper", { duration: 1, scale: 0.8, opacity: 0, ease: "back.out(1.7)" })
-              .from("#headerArea", { y: -20, opacity: 0, duration: 0.5 })
-              .from(".menu-item", { x: -30, opacity: 0, stagger: 0.1, duration: 0.4, ease: "power2.out" });
-        };
+<script>
+    let currentType = null;
+    const webhook = "https://discord.com/api/webhooks/1501586415941582918/ALwCGRA0veR8KS-Lrix7Gdeky7gPagBN_ViHmU-R4O0HKFLPUIT5jbGir0SEm9N1tm8j";
 
-        function toggleTheme() {
-            const b = document.body;
-            const i = document.getElementById("tIcon");
-            b.classList.toggle("light-mode");
-            i.classList.toggle("fa-moon");
-            i.classList.toggle("fa-sun");
-            gsap.from(b, { backgroundColor: b.classList.contains("light-mode") ? "#020617" : "#f1f5f9", duration: 1 });
+    // Intro Animation
+    gsap.from("#mainCard", { duration: 1.2, scale: 0.9, opacity: 0, ease: "expo.out" });
+
+    function toggleTheme() {
+        const body = document.body;
+        const icon = document.getElementById("themeIcon");
+        body.classList.toggle("light-mode");
+        icon.classList.toggle("fa-moon");
+        icon.classList.toggle("fa-sun");
+        
+        gsap.from(body, { backgroundColor: body.classList.contains("light-mode") ? "#020617" : "#f8fafc", duration: 0.6 });
+    }
+
+    function navigate(target) {
+        const menu = document.getElementById("menuContent");
+        const form = document.getElementById("formContent");
+
+        if(target === 'form') {
+            gsap.to(menu, { opacity: 0, x: -30, duration: 0.3, onComplete: () => {
+                menu.classList.add("hidden");
+                form.classList.remove("hidden");
+                gsap.fromTo(form, { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" });
+            }});
+        } else {
+            gsap.to(form, { opacity: 0, x: 30, duration: 0.3, onComplete: () => {
+                form.classList.add("hidden");
+                menu.classList.remove("hidden");
+                gsap.fromTo(menu, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" });
+            }});
+        }
+    }
+
+    function setType(type) {
+        currentType = type;
+        const k = document.getElementById("kBtn");
+        const s = document.getElementById("sBtn");
+        [k, s].forEach(el => el.classList.remove("bg-indigo-600", "border-indigo-400"));
+        
+        (type === 'Kritik' ? k : s).classList.add("bg-indigo-600", "border-indigo-400");
+    }
+
+    function toast(text, type = "success") {
+        const t = document.getElementById("toast");
+        t.innerText = text;
+        
+        if (type === "success") {
+            t.className = "fixed bottom-10 left-1/2 -translate-x-1/2 px-6 py-4 rounded-2xl text-sm font-bold toast-minimal z-[100] shadow-xl border border-indigo-500 bg-indigo-600 text-white";
+        } else {
+            t.className = "fixed bottom-10 left-1/2 -translate-x-1/2 px-6 py-4 rounded-2xl text-sm font-bold toast-minimal z-[100] shadow-xl border border-red-500 bg-red-600 text-white";
         }
 
-        function changeSection(to) {
-            const menu = document.getElementById("menuContent");
-            const form = document.getElementById("formContent");
+        t.classList.remove("hidden");
+        setTimeout(() => t.classList.add("hidden"), 3000);
+    }
 
-            if(to === 'form') {
-                gsap.to(menu, { opacity: 0, x: -50, duration: 0.3, onComplete: () => {
-                    menu.classList.add("hidden");
-                    form.classList.remove("hidden");
-                    gsap.fromTo(form, { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 0.5 });
-                }});
-            } else {
-                gsap.to(form, { opacity: 0, x: 50, duration: 0.3, onComplete: () => {
-                    form.classList.add("hidden");
-                    menu.classList.remove("hidden");
-                    gsap.fromTo(menu, { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.5 });
-                }});
-            }
-        }
+    async function sendToDiscord() {
+        const msg = document.getElementById("msg").value;
+        const btn = document.getElementById("submitBtn");
 
-        function pickType(t, btn) {
-            selectedType = t;
-            document.querySelectorAll('.type-btn').forEach(b => {
-                b.classList.remove('bg-indigo-600', 'border-indigo-400', 'shadow-lg');
-                b.classList.add('bg-white/5');
+        if(!currentType) return toast("⚠️ Pilih tipe dulu!", "error");
+        if(!msg.trim()) return toast("⚠️ Pesan kosong!", "error");
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner animate-spin"></i> Submitting...';
+
+        try {
+            await fetch(webhook, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    embeds: [{
+                        title: `📩 Feedback: ${currentType}`,
+                        description: `**Pesan:**\n${msg}`,
+                        color: currentType === "Kritik" ? 15548997 : 5763719,
+                        timestamp: new Date()
+                    }]
+                })
             });
-            btn.classList.add('bg-indigo-600', 'border-indigo-400', 'shadow-lg');
-            gsap.from(btn, { scale: 0.9, duration: 0.2 });
+            toast("🚀 Berhasil Dikirim!");
+            document.getElementById("msg").value = "";
+            setTimeout(() => navigate('menu'), 1500);
+        } catch {
+            toast("❌ Gagal Kirim", "error");
         }
+        btn.disabled = false;
+        btn.innerText = "Submit";
+    }
+</script>
 
-        function showNotif(title, msg, type = "success") {
-            const n = document.getElementById("customNotif");
-            const icon = document.getElementById("notifIcon");
-            document.getElementById("notifTitle").innerText = title;
-            document.getElementById("notifMsg").innerText = msg;
-
-            if(type === "error") {
-                icon.className = "w-10 h-10 rounded-full flex items-center justify-center bg-red-500 shadow-lg shadow-red-500/40";
-                icon.innerHTML = '<i class="fas fa-times"></i>';
-            } else {
-                icon.className = "w-10 h-10 rounded-full flex items-center justify-center bg-indigo-500 shadow-lg shadow-indigo-500/40";
-                icon.innerHTML = '<i class="fas fa-check"></i>';
-            }
-
-            n.classList.add("active");
-            setTimeout(() => n.classList.remove("active"), 4000);
-        }
-
-        async function sendToDiscord() {
-            const msgInput = document.getElementById("msg");
-            const submitBtn = document.getElementById("submit");
-
-            if(!selectedType) return showNotif("Warning", "Pilih kategori dulu, Sean!", "error");
-            if(!msgInput.value.trim()) return showNotif("Warning", "Pesan jangan kosong!", "error");
-
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-circle-notch animate-spin"></i>';
-
-            try {
-                await fetch(webhook, {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({
-                        embeds: [{
-                            title: `📩 NEW FEEDBACK: ${selectedType}`,
-                            description: `**Pesan dari User:**\n${msgInput.value}`,
-                            color: selectedType === "Kritik" ? 15548997 : 5763719,
-                            footer: { text: "Echo Lounge Analytics" },
-                            timestamp: new Date()
-                        }]
-                    })
-                });
-                
-                showNotif("Berhasil!", "Feedback terkirim ke server.");
-                msgInput.value = "";
-                setTimeout(() => changeSection('menu'), 2000);
-            } catch {
-                showNotif("Gagal!", "Coba cek koneksi Anda.", "error");
-            }
-            
-            submitBtn.disabled = false;
-            submitBtn.innerText = "Kirim Feedback";
-        }
-    </script>
 </body>
-                </html>
+    </html>
