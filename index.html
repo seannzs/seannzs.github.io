@@ -6,6 +6,7 @@
     <title>Echo Lounge | Dashboard Community</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -13,26 +14,25 @@
         <div class="logo-area">
             <img src="https://i.imgur.com/7yUvePI.png" alt="EC Logo" class="main-logo">
             <h2>Echo Lounge</h2>
-            <span>DISCORD SERVER</span>
+            <span>COMMUNITY HUB</span>
         </div>
         
         <ul class="nav-links">
             <li class="active"><i class="fas fa-home"></i> Beranda</li>
-            <li><i class="fas fa-info-circle"></i> Tentang Server</li>
-            <li><i class="fas fa-th-large"></i> Fitur</li>
-            <li><i class="fas fa-images"></i> Galeri</li>
-            <li><i class="fas fa-calendar-alt"></i> Event</li>
+            <li onclick="openModal('feedbackModal')"><i class="fas fa-comment-dots"></i> Kritik & Saran</li>
             <li><i class="fas fa-chart-line"></i> Statistik</li>
-            <li><i class="fas fa-users"></i> Tim</li>
-            <li><i class="fas fa-comment-dots"></i> Testimoni</li>
-            <li><i class="fas fa-envelope"></i> Kontak</li>
+            <li onclick="document.getElementById('uploadInput').click()"><i class="fas fa-upload"></i> Upload Karya</li>
         </ul>
 
+        <input type="file" id="uploadInput" hidden accept="image/*,video/*">
+
         <div class="sidebar-promo">
-            <p>Gabung sekarang dan jadilah bagian dari komunitas!</p>
-            <button class="btn-join-small"><i class="fab fa-discord"></i> Join Discord</button>
+            <p>Gabung komunitas Discord kami sekarang!</p>
+            <button class="btn-join-small" onclick="window.open('https://discord.gg/jRkcCFdT4T')">
+                <i class="fab fa-discord"></i> Join Discord
+            </button>
             <div class="online-status">
-                <span class="dot"></span> 1,234 Members Online
+                <span class="dot"></span> 1,234 Online
             </div>
         </div>
     </nav>
@@ -40,85 +40,76 @@
     <main class="content">
         <section class="hero-card">
             <div class="hero-text">
-                <span class="badge">COMMUNITY</span>
-                <h1>Echo Lounge<br>Discord Server</h1>
-                <p>Komunitas kreatif untuk belajar, berbagi karya, dan berkembang bersama di dunia digital.</p>
+                <span class="badge">ECHO LOUNGE EXCLUSIVE</span>
+                <h1>Connect, Create,<br>& Collaborate.</h1>
+                <p>Ruang digital bagi para kreator untuk berbagi inspirasi dan berkembang bersama komunitas.</p>
                 <div class="hero-btns">
-                    <button class="btn-primary"><i class="fab fa-discord"></i> Join Server</button>
-                    <button class="btn-outline"><i class="fas fa-eye"></i> Lihat Galeri</button>
+                    <button class="btn-primary" onclick="window.open('https://discord.gg/jRkcCFdT4T')">
+                        <i class="fab fa-discord"></i> Join Server
+                    </button>
+                    <button class="btn-outline" onclick="document.getElementById('uploadInput').click()">
+                        <i class="fas fa-cloud-upload-alt"></i> Upload Media
+                    </button>
                 </div>
             </div>
             <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=600" alt="Tech Background">
-            </div>
-        </section>
-
-        <section class="section-container">
-            <h3>KENAPA HARUS ECHO LOUNGE?</h3>
-            <div class="features-grid">
-                <div class="f-card">
-                    <div class="f-icon"><i class="fas fa-comments"></i></div>
-                    <h4>Share & Feedback</h4>
-                    <p>Dapatkan kritik yang membangun untuk karyamu.</p>
-                </div>
-                <div class="f-card">
-                    <div class="f-icon"><i class="fas fa-trophy"></i></div>
-                    <h4>Monthly Challenge</h4>
-                    <p>Ikuti tantangan seru dan menangkan hadiah menarik.</p>
-                </div>
-                <div class="f-card">
-                    <div class="f-icon"><i class="fas fa-graduation-cap"></i></div>
-                    <h4>Belajar Bersama</h4>
-                    <p>Diskusi seputar teknologi dari pemula hingga pro.</p>
-                </div>
-                <div class="f-card">
-                    <div class="f-icon"><i class="fas fa-gift"></i></div>
-                    <h4>Event & Giveaway</h4>
-                    <p>Event komunitas rutin setiap bulannya.</p>
-                </div>
+                <img src="https://i.imgur.com/7yUvePI.png" alt="Branding Logo">
             </div>
         </section>
 
         <section class="section-container">
             <div class="section-header">
-                <h3>GALERI TERBARU</h3>
-                <span class="link">Lihat Semua <i class="fas fa-chevron-right"></i></span>
+                <h3>GALERI MEMBER</h3>
+                <span class="gallery-info">Total: <span id="galleryCount">4</span> Media</span>
             </div>
-            <div class="gallery-grid">
-                <div class="g-item"><img src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=60&w=300"></div>
-                <div class="g-item"><img src="https://images.unsplash.com/photo-1558591710-4b4a1ad0f048?auto=format&fit=crop&q=60&w=300"></div>
-                <div class="g-item"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=60&w=300"></div>
-                <div class="g-item"><img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&q=60&w=300"></div>
+            <div class="gallery-grid" id="memberGallery">
+                <div class="g-item"><img src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=60&w=400"></div>
+                <div class="g-item"><img src="https://images.unsplash.com/photo-1558591710-4b4a1ad0f048?auto=format&fit=crop&q=60&w=400"></div>
+                <div class="g-item"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=60&w=400"></div>
+                <div class="g-item"><img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&q=60&w=400"></div>
             </div>
         </section>
     </main>
 
-    <aside class="right-sidebar">
-        <div class="stat-card">
-            <h4><i class="fas fa-chart-bar"></i> STATISTIK SERVER</h4>
-            <div class="stat-item">
-                <div class="stat-icon purple"><i class="fas fa-users"></i></div>
-                <div class="stat-info"><span>12.5K+</span><p>Total Members</p></div>
+    <aside class="right-panel">
+        <div class="panel-box">
+            <h4><i class="fas fa-signal"></i> STATISTIK</h4>
+            <div class="stat-row">
+                <div class="s-icon purple"><i class="fas fa-users"></i></div>
+                <div class="s-info"><b>12.5K+</b><p>Total Member</p></div>
             </div>
-            <div class="stat-item">
-                <div class="stat-icon green"><span class="dot"></span></div>
-                <div class="stat-info"><span>1.2K+</span><p>Online Now</p></div>
+            <div class="stat-row">
+                <div class="s-icon green"><i class="fas fa-circle"></i></div>
+                <div class="s-info"><b>1.2K+</b><p>Sedang Online</p></div>
             </div>
         </div>
 
-        <div class="event-card">
-            <h4><i class="fas fa-calendar-check"></i> EVENT MENDATANG</h4>
-            <div class="event-item">
-                <div class="date">24<span>MEI</span></div>
-                <div class="event-info">
-                    <h5>Web Dev Challenge</h5>
-                    <p>Tema: UI/UX Portfolio</p>
-                </div>
+        <div class="panel-box">
+            <h4><i class="fas fa-calendar-alt"></i> EVENT</h4>
+            <div class="event-row">
+                <div class="ev-date">24<span>MEI</span></div>
+                <div class="ev-info"><b>Design Challenge</b><p>Hadiah: Discord Nitro</p></div>
             </div>
         </div>
     </aside>
 
+    <div id="feedbackModal" class="modal">
+        <div class="modal-box">
+            <span class="close-btn" onclick="closeModal('feedbackModal')">&times;</span>
+            <h3>Kritik & Saran</h3>
+            <p>Masukanmu sangat berarti bagi perkembangan server.</p>
+            <div class="type-selector">
+                <button onclick="setFeedbackType('Kritik', this)" class="t-btn">KRITIK</button>
+                <button onclick="setFeedbackType('Saran', this)" class="t-btn">SARAN</button>
+            </div>
+            <textarea id="feedbackText" placeholder="Apa yang ingin kamu sampaikan?"></textarea>
+            <button id="submitBtn" onclick="sendToDiscord()" class="btn-primary w-full">KIRIM PESAN</button>
+        </div>
+    </div>
+
+    <div id="toast">Notifikasi</div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="javascript.js"></script>
 </body>
-                </html>
+                        </html>
