@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echo Lounge | Hub</title>
+    <title>Echo Lounge | Dashboard Hub</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -16,67 +16,76 @@
 
     <nav class="sidebar" id="sidebar">
         <div class="logo-area">
-            <img src="https://i.imgur.com/7yUvePI.png" alt="Logo" class="main-logo">
+            <img src="https://i.imgur.com/7yUvePI.png" alt="EC Logo" class="main-logo">
             <h2>Echo Lounge</h2>
-            <span>CONNECTED EXCELLENCE</span>
+            <span>COMMUNITY HUB</span>
         </div>
         
         <ul class="nav-links">
             <li class="active" onclick="toggleSidebar()"><i class="fas fa-home"></i> Beranda</li>
             <li onclick="openModal('feedbackModal'); toggleSidebar()"><i class="fas fa-comment-dots"></i> Kritik & Saran</li>
             <li onclick="toggleSidebar()"><i class="fas fa-chart-line"></i> Statistik</li>
-            <li onclick="document.getElementById('uploadInput').click(); toggleSidebar()"><i class="fas fa-upload"></i> Upload</li>
+            <li onclick="document.getElementById('uploadInput').click(); toggleSidebar()"><i class="fas fa-upload"></i> Upload Karya</li>
         </ul>
 
-        <div class="sidebar-footer">
-            <button class="btn-discord" onclick="window.open('https://discord.gg/jRkcCFdT4T')">
+        <div class="sidebar-promo">
+            <button class="btn-join-small" onclick="window.open('https://discord.gg/jRkcCFdT4T')">
                 <i class="fab fa-discord"></i> Join Discord
             </button>
+            <div class="online-status">
+                <span class="dot"></span> 1,234 Online
+            </div>
         </div>
     </nav>
 
-    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-    <main class="main-content">
-        <section class="hero">
-            <div class="hero-content">
-                <span class="tag">ECHO LOUNGE EXCLUSIVE</span>
-                <h1>Connect, Create, & Collaborate.</h1>
-                <p>Bagikan inspirasimu dan berkembang bersama komunitas kreatif kami.</p>
-                <div class="action-btns">
-                    <button class="btn-main" onclick="window.open('https://discord.gg/jRkcCFdT4T')">Join Server</button>
-                    <button class="btn-sub" onclick="document.getElementById('uploadInput').click()">Upload Media</button>
+    <main class="content">
+        <section class="hero-card">
+            <div class="hero-text">
+                <span class="badge">ECHO LOUNGE EXCLUSIVE</span>
+                <h1>Connect, Create,<br>& Collaborate.</h1>
+                <p>Ruang digital bagi para kreator untuk berbagi inspirasi dan berkembang bersama.</p>
+                <div class="hero-btns">
+                    <button class="btn-primary" onclick="window.open('https://discord.gg/jRkcCFdT4T')">
+                        <i class="fab fa-discord"></i> Join Server
+                    </button>
+                    <button class="btn-outline" onclick="document.getElementById('uploadInput').click()">
+                        <i class="fas fa-cloud-upload-alt"></i> Upload
+                    </button>
                 </div>
-                <input type="file" id="uploadInput" hidden accept="image/*,video/*">
             </div>
+            <input type="file" id="uploadInput" hidden accept="image/*,video/*">
         </section>
 
-        <section class="gallery-section">
-            <h3>GALERI MEMBER</h3>
-            <div class="gallery-container" id="memberGallery">
-                <div class="media-card"><img src="https://i.imgur.com/7yUvePI.png"></div>
-                <div class="media-card"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400"></div>
-                <div class="media-card"><img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=400"></div>
+        <section class="section-container">
+            <div class="section-header">
+                <h3>GALERI MEMBER</h3>
+            </div>
+            <div class="gallery-grid" id="memberGallery">
+                <div class="g-item"><img src="https://i.imgur.com/7yUvePI.png"></div>
+                <div class="g-item"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400"></div>
+                <div class="g-item"><img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=400"></div>
             </div>
         </section>
     </main>
 
-    <div id="feedbackModal" class="modal-bg">
+    <div id="feedbackModal" class="modal">
         <div class="modal-box">
-            <span class="close-x" onclick="closeModal('feedbackModal')">&times;</span>
-            <h3>Feedback</h3>
-            <div class="type-select">
-                <button onclick="setType('Kritik', this)" class="type-opt">Kritik</button>
-                <button onclick="setType('Saran', this)" class="type-opt">Saran</button>
+            <span class="close-btn" onclick="closeModal('feedbackModal')">&times;</span>
+            <h3>Kritik & Saran</h3>
+            <div class="type-selector">
+                <button onclick="setFeedbackType('Kritik', this)" class="t-btn">KRITIK</button>
+                <button onclick="setFeedbackType('Saran', this)" class="t-btn">SARAN</button>
             </div>
-            <textarea id="msgBody" placeholder="Tulis pesanmu di sini..."></textarea>
-            <button id="submitFeedback" onclick="postToDiscord()" class="btn-send">Kirim Ke Discord</button>
+            <textarea id="feedbackText" placeholder="Pesanmu..."></textarea>
+            <button id="submitBtn" onclick="sendToDiscord()" class="btn-primary" style="width:100%">KIRIM</button>
         </div>
     </div>
 
-    <div id="notif">Berhasil!</div>
+    <div id="toast">Notifikasi</div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="javascript.js"></script>
 </body>
-        </html>
+                </html>
