@@ -3,264 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echo Lounge | Connect</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Echo Lounge | Dashboard Community</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap');
-
-        :root {
-            --bg: #05070a;
-            --card: #0d1117;
-            --accent: #6366f1;
-            --text-main: #ffffff;
-            --text-dim: rgba(255, 255, 255, 0.5);
-            --glass-border: rgba(255, 255, 255, 0.1);
-        }
-
-        .light-mode {
-            --bg: #f8fafc;
-            --card: #ffffff;
-            --accent: #4f46e5;
-            --text-main: #0f172a;
-            --text-dim: #64748b;
-            --glass-border: rgba(0, 0, 0, 0.05);
-        }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text-main);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            transition: 0.5s ease;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-        }
-
-        /* Card Layout Fix */
-        .glass-box {
-            background: var(--card);
-            border: 1px solid var(--glass-border);
-            border-radius: 40px;
-            width: 100%;
-            max-width: 360px;
-            padding: 40px 30px;
-            text-center: center;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-            position: relative;
-            z-index: 10;
-        }
-
-        /* Logo Profile Fix */
-        .profile-frame {
-            width: 100px;
-            height: 100px;
-            background: #ffffff;
-            border-radius: 30px;
-            margin: 0 auto 24px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.2);
-            border: 2px solid var(--accent);
-        }
-
-        .profile-frame img {
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-        }
-
-        /* Button Premium */
-        .btn-custom {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            width: 100%;
-            padding: 18px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 14px;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-bottom: 12px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-discord { background: #5865F2; color: #ffffff; }
-        .btn-tiktok { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: var(--text-main); }
-        .btn-form { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #ffffff; margin-top: 10px; }
-
-        .btn-custom:hover { transform: translateY(-3px); filter: brightness(1.1); }
-        .btn-custom:active { transform: scale(0.95); }
-
-        /* Input Fix: Agar teks Putih di Dark Mode */
-        textarea {
-            width: 100%;
-            background: rgba(0,0,0,0.2) !important;
-            border: 1px solid var(--glass-border) !important;
-            border-radius: 18px;
-            padding: 15px;
-            color: #ffffff !important; /* Paksa Putih */
-            font-size: 14px;
-            outline: none;
-            margin-bottom: 15px;
-        }
-        .light-mode textarea { color: #000000 !important; background: #f1f5f9 !important; }
-
-        /* Notification Fix */
-        #notif-pop {
-            position: fixed;
-            bottom: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1e293b;
-            color: white;
-            padding: 16px 30px;
-            border-radius: 25px;
-            font-weight: 700;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            border: 1px solid var(--accent);
-            z-index: 1000;
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        #notif-pop.active { bottom: 40px; }
-    </style>
 </head>
 <body>
 
-    <button onclick="changeTheme()" style="position:fixed; top:30px; right:30px; width:50px; height:50px; background:var(--card); border:1px solid var(--glass-border); border-radius:15px; z-index:100; cursor:pointer; color:var(--accent);">
-        <i id="themeIcon" class="fas fa-moon"></i>
-    </button>
-
-    <div class="glass-box" id="ui-card">
-        <div class="profile-frame">
-            <img src="" alt="EC Logo">
+    <nav class="sidebar">
+        <div class="logo-area">
+            <img src="https://i.imgur.com/7yUvePI.png" alt="EC Logo" class="main-logo">
+            <h2>Echo Lounge</h2>
+            <span>DISCORD SERVER</span>
         </div>
+        
+        <ul class="nav-links">
+            <li class="active"><i class="fas fa-home"></i> Beranda</li>
+            <li><i class="fas fa-info-circle"></i> Tentang Server</li>
+            <li><i class="fas fa-th-large"></i> Fitur</li>
+            <li><i class="fas fa-images"></i> Galeri</li>
+            <li><i class="fas fa-calendar-alt"></i> Event</li>
+            <li><i class="fas fa-chart-line"></i> Statistik</li>
+            <li><i class="fas fa-users"></i> Tim</li>
+            <li><i class="fas fa-comment-dots"></i> Testimoni</li>
+            <li><i class="fas fa-envelope"></i> Kontak</li>
+        </ul>
 
-        <h1 style="font-size: 28px; font-weight: 800; letter-spacing: -1px; margin-bottom: 5px;">Echo Lounge</h1>
-        <p style="color: var(--text-dim); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 35px;">Connected Excellence</p>
-
-        <div id="main-menu">
-            <button onclick="window.open('https://discord.gg/jRkcCFdT4T')" class="btn-custom btn-discord">
-                <i class="fab fa-discord text-xl"></i> Discord Community
-            </button>
-            
-            <button onclick="window.open('https://tiktok.com/@sean_logs')" class="btn-custom btn-tiktok">
-                <i class="fab fa-tiktok text-xl"></i> TikTok Feed
-            </button>
-
-            <button onclick="showPage('form')" class="btn-custom btn-form shadow-lg shadow-indigo-500/20">
-                <i class="fas fa-paper-plane"></i> Kirim Masukan
-            </button>
-        </div>
-
-        <div id="form-page" style="display: none; text-align: left;">
-            <p onclick="showPage('menu')" style="cursor:pointer; font-size: 12px; font-weight: 800; opacity: 0.5; margin-bottom: 20px;">
-                <i class="fas fa-chevron-left"></i> KEMBALI
-            </p>
-
-            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                <button id="kBtn" onclick="setType('Kritik')" style="flex:1; padding:12px; border-radius:12px; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); color:var(--text-main); font-weight:700; font-size:10px;">KRITIK</button>
-                <button id="sBtn" onclick="setType('Saran')" style="flex:1; padding:12px; border-radius:12px; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); color:var(--text-main); font-weight:700; font-size:10px;">SARAN</button>
+        <div class="sidebar-promo">
+            <p>Gabung sekarang dan jadilah bagian dari komunitas!</p>
+            <button class="btn-join-small"><i class="fab fa-discord"></i> Join Discord</button>
+            <div class="online-status">
+                <span class="dot"></span> 1,234 Members Online
             </div>
-
-            <textarea id="feedbackText" rows="4" placeholder="Tulis pesanmu di sini..."></textarea>
-
-            <button id="submitBtn" onclick="submitToDiscord()" class="btn-custom btn-form">KIRIM SEKARANG</button>
         </div>
-    </div>
+    </nav>
 
-    <div id="notif-pop">Pesan Terkirim! 🚀</div>
+    <main class="content">
+        <section class="hero-card">
+            <div class="hero-text">
+                <span class="badge">COMMUNITY</span>
+                <h1>Echo Lounge<br>Discord Server</h1>
+                <p>Komunitas kreatif untuk belajar, berbagi karya, dan berkembang bersama di dunia digital.</p>
+                <div class="hero-btns">
+                    <button class="btn-primary"><i class="fab fa-discord"></i> Join Server</button>
+                    <button class="btn-outline"><i class="fas fa-eye"></i> Lihat Galeri</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=600" alt="Tech Background">
+            </div>
+        </section>
 
-    <script>
-        let feedbackType = "";
-        const webhookUrl = "https://discord.com/api/webhooks/1501586415941582918/ALwCGRA0veR8KS-Lrix7Gdeky7gPagBN_ViHmU-R4O0HKFLPUIT5jbGir0SEm9N1tm8j";
+        <section class="section-container">
+            <h3>KENAPA HARUS ECHO LOUNGE?</h3>
+            <div class="features-grid">
+                <div class="f-card">
+                    <div class="f-icon"><i class="fas fa-comments"></i></div>
+                    <h4>Share & Feedback</h4>
+                    <p>Dapatkan kritik yang membangun untuk karyamu.</p>
+                </div>
+                <div class="f-card">
+                    <div class="f-icon"><i class="fas fa-trophy"></i></div>
+                    <h4>Monthly Challenge</h4>
+                    <p>Ikuti tantangan seru dan menangkan hadiah menarik.</p>
+                </div>
+                <div class="f-card">
+                    <div class="f-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h4>Belajar Bersama</h4>
+                    <p>Diskusi seputar teknologi dari pemula hingga pro.</p>
+                </div>
+                <div class="f-card">
+                    <div class="f-icon"><i class="fas fa-gift"></i></div>
+                    <h4>Event & Giveaway</h4>
+                    <p>Event komunitas rutin setiap bulannya.</p>
+                </div>
+            </div>
+        </section>
 
-        // Initial GSAP Intro
-        gsap.from("#ui-card", { duration: 1.2, y: 60, opacity: 0, ease: "expo.out" });
+        <section class="section-container">
+            <div class="section-header">
+                <h3>GALERI TERBARU</h3>
+                <span class="link">Lihat Semua <i class="fas fa-chevron-right"></i></span>
+            </div>
+            <div class="gallery-grid">
+                <div class="g-item"><img src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=60&w=300"></div>
+                <div class="g-item"><img src="https://images.unsplash.com/photo-1558591710-4b4a1ad0f048?auto=format&fit=crop&q=60&w=300"></div>
+                <div class="g-item"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=60&w=300"></div>
+                <div class="g-item"><img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&q=60&w=300"></div>
+            </div>
+        </section>
+    </main>
 
-        function changeTheme() {
-            document.body.classList.toggle("light-mode");
-            const icon = document.getElementById("themeIcon");
-            icon.className = document.body.classList.contains("light-mode") ? "fas fa-sun" : "fas fa-moon";
-        }
+    <aside class="right-sidebar">
+        <div class="stat-card">
+            <h4><i class="fas fa-chart-bar"></i> STATISTIK SERVER</h4>
+            <div class="stat-item">
+                <div class="stat-icon purple"><i class="fas fa-users"></i></div>
+                <div class="stat-info"><span>12.5K+</span><p>Total Members</p></div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon green"><span class="dot"></span></div>
+                <div class="stat-info"><span>1.2K+</span><p>Online Now</p></div>
+            </div>
+        </div>
 
-        function showPage(page) {
-            const menu = document.getElementById("main-menu");
-            const form = document.getElementById("form-page");
-            
-            if(page === 'form') {
-                gsap.to(menu, { opacity: 0, y: 10, duration: 0.3, onComplete: () => {
-                    menu.style.display = "none";
-                    form.style.display = "block";
-                    gsap.fromTo(form, { opacity: 0, y: -10 }, { opacity: 1, y: 0 });
-                }});
-            } else {
-                gsap.to(form, { opacity: 0, y: 10, duration: 0.3, onComplete: () => {
-                    form.style.display = "none";
-                    menu.style.display = "block";
-                    gsap.fromTo(menu, { opacity: 0, y: -10 }, { opacity: 1, y: 0 });
-                }});
-            }
-        }
+        <div class="event-card">
+            <h4><i class="fas fa-calendar-check"></i> EVENT MENDATANG</h4>
+            <div class="event-item">
+                <div class="date">24<span>MEI</span></div>
+                <div class="event-info">
+                    <h5>Web Dev Challenge</h5>
+                    <p>Tema: UI/UX Portfolio</p>
+                </div>
+            </div>
+        </div>
+    </aside>
 
-        function setType(type) {
-            feedbackType = type;
-            const k = document.getElementById("kBtn");
-            const s = document.getElementById("sBtn");
-            k.style.background = s.style.background = "rgba(255,255,255,0.05)";
-            (type === 'Kritik' ? k : s).style.background = "#6366f1";
-        }
-
-        async function submitToDiscord() {
-            const msg = document.getElementById("feedbackText").value;
-            const n = document.getElementById("notif-pop");
-
-            if(!feedbackType || !msg.trim()) {
-                n.innerText = "Pilih kategori & isi pesan!";
-                n.style.background = "#ef4444";
-                n.classList.add("active");
-                setTimeout(() => n.classList.remove("active"), 3000);
-                return;
-            }
-
-            try {
-                await fetch(webhookUrl, {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({
-                        embeds: [{
-                            title: `Feedback: ${feedbackType}`,
-                            description: msg,
-                            color: 6518771,
-                            timestamp: new Date()
-                        }]
-                    })
-                });
-                n.innerText = "Berhasil Dikirim! 🚀";
-                n.style.background = "#6366f1";
-                n.classList.add("active");
-                document.getElementById("feedbackText").value = "";
-                setTimeout(() => {
-                    n.classList.remove("active");
-                    showPage('menu');
-                }, 2000);
-            } catch {
-                n.innerText = "Gagal Mengirim!";
-                n.style.background = "#ef4444";
-                n.classList.add("active");
-                setTimeout(() => n.classList.remove("active"), 3000);
-            }
-        }
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="javascript.js"></script>
 </body>
-    </html>
+                </html>
