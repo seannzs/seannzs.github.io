@@ -3,113 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echo Lounge | Dashboard Community</title>
+    <title>Echo Lounge | Hub</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <nav class="sidebar">
+    <button class="mobile-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <nav class="sidebar" id="sidebar">
         <div class="logo-area">
-            <img src="https://i.imgur.com/7yUvePI.png" alt="EC Logo" class="main-logo">
+            <img src="https://i.imgur.com/7yUvePI.png" alt="Logo" class="main-logo">
             <h2>Echo Lounge</h2>
-            <span>COMMUNITY HUB</span>
+            <span>CONNECTED EXCELLENCE</span>
         </div>
         
         <ul class="nav-links">
-            <li class="active"><i class="fas fa-home"></i> Beranda</li>
-            <li onclick="openModal('feedbackModal')"><i class="fas fa-comment-dots"></i> Kritik & Saran</li>
-            <li><i class="fas fa-chart-line"></i> Statistik</li>
-            <li onclick="document.getElementById('uploadInput').click()"><i class="fas fa-upload"></i> Upload Karya</li>
+            <li class="active" onclick="toggleSidebar()"><i class="fas fa-home"></i> Beranda</li>
+            <li onclick="openModal('feedbackModal'); toggleSidebar()"><i class="fas fa-comment-dots"></i> Kritik & Saran</li>
+            <li onclick="toggleSidebar()"><i class="fas fa-chart-line"></i> Statistik</li>
+            <li onclick="document.getElementById('uploadInput').click(); toggleSidebar()"><i class="fas fa-upload"></i> Upload</li>
         </ul>
 
-        <input type="file" id="uploadInput" hidden accept="image/*,video/*">
-
-        <div class="sidebar-promo">
-            <p>Gabung komunitas Discord kami sekarang!</p>
-            <button class="btn-join-small" onclick="window.open('https://discord.gg/jRkcCFdT4T')">
+        <div class="sidebar-footer">
+            <button class="btn-discord" onclick="window.open('https://discord.gg/jRkcCFdT4T')">
                 <i class="fab fa-discord"></i> Join Discord
             </button>
-            <div class="online-status">
-                <span class="dot"></span> 1,234 Online
-            </div>
         </div>
     </nav>
 
-    <main class="content">
-        <section class="hero-card">
-            <div class="hero-text">
-                <span class="badge">ECHO LOUNGE EXCLUSIVE</span>
-                <h1>Connect, Create,<br>& Collaborate.</h1>
-                <p>Ruang digital bagi para kreator untuk berbagi inspirasi dan berkembang bersama komunitas.</p>
-                <div class="hero-btns">
-                    <button class="btn-primary" onclick="window.open('https://discord.gg/jRkcCFdT4T')">
-                        <i class="fab fa-discord"></i> Join Server
-                    </button>
-                    <button class="btn-outline" onclick="document.getElementById('uploadInput').click()">
-                        <i class="fas fa-cloud-upload-alt"></i> Upload Media
-                    </button>
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <main class="main-content">
+        <section class="hero">
+            <div class="hero-content">
+                <span class="tag">ECHO LOUNGE EXCLUSIVE</span>
+                <h1>Connect, Create, & Collaborate.</h1>
+                <p>Bagikan inspirasimu dan berkembang bersama komunitas kreatif kami.</p>
+                <div class="action-btns">
+                    <button class="btn-main" onclick="window.open('https://discord.gg/jRkcCFdT4T')">Join Server</button>
+                    <button class="btn-sub" onclick="document.getElementById('uploadInput').click()">Upload Media</button>
                 </div>
-            </div>
-            <div class="hero-image">
-                <img src="https://i.imgur.com/7yUvePI.png" alt="Branding Logo">
+                <input type="file" id="uploadInput" hidden accept="image/*,video/*">
             </div>
         </section>
 
-        <section class="section-container">
-            <div class="section-header">
-                <h3>GALERI MEMBER</h3>
-                <span class="gallery-info">Total: <span id="galleryCount">4</span> Media</span>
-            </div>
-            <div class="gallery-grid" id="memberGallery">
-                <div class="g-item"><img src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=60&w=400"></div>
-                <div class="g-item"><img src="https://images.unsplash.com/photo-1558591710-4b4a1ad0f048?auto=format&fit=crop&q=60&w=400"></div>
-                <div class="g-item"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=60&w=400"></div>
-                <div class="g-item"><img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&q=60&w=400"></div>
+        <section class="gallery-section">
+            <h3>GALERI MEMBER</h3>
+            <div class="gallery-container" id="memberGallery">
+                <div class="media-card"><img src="https://i.imgur.com/7yUvePI.png"></div>
+                <div class="media-card"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400"></div>
+                <div class="media-card"><img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=400"></div>
             </div>
         </section>
     </main>
 
-    <aside class="right-panel">
-        <div class="panel-box">
-            <h4><i class="fas fa-signal"></i> STATISTIK</h4>
-            <div class="stat-row">
-                <div class="s-icon purple"><i class="fas fa-users"></i></div>
-                <div class="s-info"><b>12.5K+</b><p>Total Member</p></div>
-            </div>
-            <div class="stat-row">
-                <div class="s-icon green"><i class="fas fa-circle"></i></div>
-                <div class="s-info"><b>1.2K+</b><p>Sedang Online</p></div>
-            </div>
-        </div>
-
-        <div class="panel-box">
-            <h4><i class="fas fa-calendar-alt"></i> EVENT</h4>
-            <div class="event-row">
-                <div class="ev-date">24<span>MEI</span></div>
-                <div class="ev-info"><b>Design Challenge</b><p>Hadiah: Discord Nitro</p></div>
-            </div>
-        </div>
-    </aside>
-
-    <div id="feedbackModal" class="modal">
+    <div id="feedbackModal" class="modal-bg">
         <div class="modal-box">
-            <span class="close-btn" onclick="closeModal('feedbackModal')">&times;</span>
-            <h3>Kritik & Saran</h3>
-            <p>Masukanmu sangat berarti bagi perkembangan server.</p>
-            <div class="type-selector">
-                <button onclick="setFeedbackType('Kritik', this)" class="t-btn">KRITIK</button>
-                <button onclick="setFeedbackType('Saran', this)" class="t-btn">SARAN</button>
+            <span class="close-x" onclick="closeModal('feedbackModal')">&times;</span>
+            <h3>Feedback</h3>
+            <div class="type-select">
+                <button onclick="setType('Kritik', this)" class="type-opt">Kritik</button>
+                <button onclick="setType('Saran', this)" class="type-opt">Saran</button>
             </div>
-            <textarea id="feedbackText" placeholder="Apa yang ingin kamu sampaikan?"></textarea>
-            <button id="submitBtn" onclick="sendToDiscord()" class="btn-primary w-full">KIRIM PESAN</button>
+            <textarea id="msgBody" placeholder="Tulis pesanmu di sini..."></textarea>
+            <button id="submitFeedback" onclick="postToDiscord()" class="btn-send">Kirim Ke Discord</button>
         </div>
     </div>
 
-    <div id="toast">Notifikasi</div>
+    <div id="notif">Berhasil!</div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="javascript.js"></script>
 </body>
-                        </html>
+        </html>
