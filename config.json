@@ -1,0 +1,60 @@
+{
+  "profile": {
+    "serverName": "Neon Void",
+    "tagline": "Where legends are made in the dark",
+    "description": "Komunitas gaming & creative terbesar. Tempat berkumpulnya para gamer, desainer, dan kreator konten yang ingin bertumbuh bersama. Bergabunglah dan jadilah bagian dari sesuatu yang luar biasa.",
+    "avatarUrl": "https://api.dicebear.com/7.x/bottts/svg?seed=NeonVoid&backgroundColor=0f0f1a",
+    "bannerColor": "#7c3aed",
+    "accentColor": "#a855f7",
+    "memberCount": "12,400+",
+    "onlineCount": "3,200+",
+    "category": "Gaming & Creative"
+  },
+  "stats": [
+    { "label": "Members", "value": "12,400+", "icon": "👥" },
+    { "label": "Online Now", "value": "3,200+", "icon": "🟢" },
+    { "label": "Channels", "value": "80+", "icon": "💬" },
+    { "label": "Events/Month", "value": "50+", "icon": "🎉" }
+  ],
+  "features": [
+    {
+      "icon": "🎮",
+      "title": "Gaming Events",
+      "description": "Turnamen mingguan, scrimmage, dan event gaming seru bareng member lainnya."
+    },
+    {
+      "icon": "🎨",
+      "title": "Creative Hub",
+      "description": "Showcase karya seni, desain, dan konten kreatif kamu ke ribuan penonton."
+    },
+    {
+      "icon": "🤝",
+      "title": "Networking",
+      "description": "Terhubung dengan sesama kreator, developer, dan gamer berbakat."
+    },
+    {
+      "icon": "🎵",
+      "title": "Music & Chill",
+      "description": "Channel musik 24/7, bot musik premium, dan voice lounge eksklusif."
+    },
+    {
+      "icon": "📚",
+      "title": "Knowledge Base",
+      "description": "Tutorial, tips, dan resource eksklusif hanya untuk member server."
+    },
+    {
+      "icon": "⭐",
+      "title": "VIP Rewards",
+      "description": "Sistem leveling & reward eksklusif untuk member aktif dan setia."
+    }
+  ],
+  "links": {
+    "discord": "https://discord.gg/your-invite-code",
+    "tiktok": "https://www.tiktok.com/@yourusername"
+  },
+  "seo": {
+    "title": "Neon Void — Discord Community",
+    "description": "Komunitas gaming & creative terbesar. Bergabunglah sekarang!",
+    "themeColor": "#0a0a12"
+  }
+}

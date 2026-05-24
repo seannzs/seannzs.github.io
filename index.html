@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a12" />
+  <title id="page-title">Loading...</title>
+  <meta name="description" id="page-description" content="" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Noise overlay -->
+  <div class="noise-overlay"></div>
+
+  <!-- Floating particles -->
+  <canvas id="particleCanvas"></canvas>
+
+  <!-- ══════════════════ NAVBAR ══════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <span class="logo-bracket">[</span>
+        <span class="logo-text" id="nav-server-name">—</span>
+        <span class="logo-bracket">]</span>
+      </div>
+      <div class="nav-links">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#stats" class="nav-link">Stats</a>
+        <a href="#join" class="nav-cta" id="nav-discord-link">Join Server</a>
+      </div>
+      <button class="nav-burger" id="navBurger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#about" class="mob-link">About</a>
+      <a href="#features" class="mob-link">Features</a>
+      <a href="#stats" class="mob-link">Stats</a>
+      <a href="#join" class="mob-link mob-cta" id="mob-discord-link">Join Server</a>
+    </div>
+  </nav>
+
+  <!-- ══════════════════ HERO ══════════════════ -->
+  <section class="hero" id="home">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-glow-1"></div>
+    <div class="hero-glow-2"></div>
+    <div class="hero-glow-3"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge reveal-up">
+        <span class="badge-dot"></span>
+        <span id="hero-category">Loading...</span>
+      </div>
+
+      <div class="hero-avatar-wrap reveal-up delay-1">
+        <div class="avatar-ring-outer"></div>
+        <div class="avatar-ring-inner"></div>
+        <img id="hero-avatar" src="" alt="Server Avatar" class="hero-avatar" />
+        <div class="avatar-status">
+          <span class="status-dot"></span>
+        </div>
+      </div>
+
+      <h1 class="hero-title reveal-up delay-2">
+        <span id="hero-server-name">—</span>
+      </h1>
+      <p class="hero-tagline reveal-up delay-3" id="hero-tagline">—</p>
+      <p class="hero-desc reveal-up delay-4" id="hero-desc">—</p>
+
+      <div class="hero-actions reveal-up delay-5">
+        <a href="#" class="btn-primary" id="hero-discord-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36" class="btn-icon"><path fill="currentColor" d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg>
+          Join Discord
+          <span class="btn-shine"></span>
+        </a>
+        <a href="#" class="btn-secondary" id="hero-tiktok-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="btn-icon"><path fill="currentColor" d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.27 8.27 0 004.84 1.56V6.78a4.85 4.85 0 01-1.07-.09z"/></svg>
+          TikTok
+        </a>
+      </div>
+
+      <div class="hero-scroll-hint reveal-up delay-6">
+        <span>Scroll down</span>
+        <div class="scroll-line"></div>
+      </div>
+    </div>
+
+    <div class="hero-floating-cards">
+      <div class="float-card fc1 reveal-left">
+        <span class="fc-icon">🎮</span>
+        <span class="fc-text">Gaming Events</span>
+      </div>
+      <div class="float-card fc2 reveal-right">
+        <span class="fc-icon">🎨</span>
+        <span class="fc-text">Creative Hub</span>
+      </div>
+      <div class="float-card fc3 reveal-left">
+        <span class="fc-icon">⭐</span>
+        <span class="fc-text">VIP Rewards</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ MARQUEE ══════════════════ -->
+  <div class="marquee-section">
+    <div class="marquee-track">
+      <div class="marquee-inner" id="marqueeInner">
+        <span>JOIN NOW</span><span class="sep">✦</span>
+        <span>GAMING</span><span class="sep">✦</span>
+        <span>CREATIVE</span><span class="sep">✦</span>
+        <span>COMMUNITY</span><span class="sep">✦</span>
+        <span>DISCORD</span><span class="sep">✦</span>
+        <span>TIKTOK</span><span class="sep">✦</span>
+        <span>EVENTS</span><span class="sep">✦</span>
+        <span>NETWORK</span><span class="sep">✦</span>
+        <span>JOIN NOW</span><span class="sep">✦</span>
+        <span>GAMING</span><span class="sep">✦</span>
+        <span>CREATIVE</span><span class="sep">✦</span>
+        <span>COMMUNITY</span><span class="sep">✦</span>
+        <span>DISCORD</span><span class="sep">✦</span>
+        <span>TIKTOK</span><span class="sep">✦</span>
+        <span>EVENTS</span><span class="sep">✦</span>
+        <span>NETWORK</span><span class="sep">✦</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ STATS ══════════════════ -->
+  <section class="stats-section section" id="stats">
+    <div class="section-label reveal-up">— Numbers —</div>
+    <h2 class="section-title reveal-up delay-1">Our Community<br/><em>in Numbers</em></h2>
+    <div class="stats-grid" id="statsGrid">
+      <!-- populated by JS -->
+    </div>
+  </section>
+
+  <!-- ══════════════════ ABOUT ══════════════════ -->
+  <section class="about-section section" id="about">
+    <div class="about-inner">
+      <div class="about-visual reveal-left">
+        <div class="about-card-stack">
+          <div class="acard acard-back"></div>
+          <div class="acard acard-mid"></div>
+          <div class="acard acard-front">
+            <img id="about-avatar" src="" alt="avatar" />
+            <div class="acard-info">
+              <p class="acard-name" id="acard-server-name">—</p>
+              <p class="acard-tag" id="acard-category">—</p>
+              <div class="acard-pills">
+                <span class="pill">🟢 Active</span>
+                <span class="pill">Verified</span>
+                <span class="pill">Community</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="about-glow"></div>
+      </div>
+      <div class="about-text reveal-right">
+        <div class="section-label">— About Us —</div>
+        <h2 class="section-title">More Than<br/>a Server</h2>
+        <p class="about-desc" id="about-desc">—</p>
+        <div class="about-tags" id="aboutTags">
+          <!-- populated by JS -->
+        </div>
+        <a href="#" class="btn-primary mt-lg" id="about-discord-btn">
+          Join the Community
+          <span class="btn-shine"></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ FEATURES ══════════════════ -->
+  <section class="features-section section" id="features">
+    <div class="section-label reveal-up">— What We Offer —</div>
+    <h2 class="section-title reveal-up delay-1">Everything You<br/><em>Need</em></h2>
+    <div class="features-grid" id="featuresGrid">
+      <!-- populated by JS -->
+    </div>
+  </section>
+
+  <!-- ══════════════════ JOIN CTA ══════════════════ -->
+  <section class="join-section section" id="join">
+    <div class="join-bg-rings">
+      <div class="jring r1"></div>
+      <div class="jring r2"></div>
+      <div class="jring r3"></div>
+    </div>
+    <div class="join-glow"></div>
+    <div class="join-content">
+      <div class="section-label reveal-up">— Ready? —</div>
+      <h2 class="join-title reveal-up delay-1">
+        Start Your<br/>
+        <em>Journey</em><br/>
+        Today
+      </h2>
+      <p class="join-sub reveal-up delay-2" id="join-sub">—</p>
+      <div class="join-btns reveal-up delay-3">
+        <a href="#" class="btn-primary btn-xl" id="join-discord-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36" class="btn-icon"><path fill="currentColor" d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg>
+          Join Discord Server
+          <span class="btn-shine"></span>
+        </a>
+        <a href="#" class="btn-outline" id="join-tiktok-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="btn-icon"><path fill="currentColor" d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.27 8.27 0 004.84 1.56V6.78a4.85 4.85 0 01-1.07-.09z"/></svg>
+          Follow TikTok
+        </a>
+      </div>
+      <div class="join-members reveal-up delay-4">
+        <div class="member-avatars">
+          <div class="mavatar" style="background:#7c3aed">A</div>
+          <div class="mavatar" style="background:#db2777">B</div>
+          <div class="mavatar" style="background:#059669">C</div>
+          <div class="mavatar" style="background:#d97706">D</div>
+          <div class="mavatar" style="background:#2563eb">E</div>
+        </div>
+        <span id="join-member-count">12,400+ members have joined</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ FOOTER ══════════════════ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <span class="logo-bracket">[</span>
+        <span id="footer-server-name">—</span>
+        <span class="logo-bracket">]</span>
+      </div>
+      <div class="footer-links">
+        <a href="#" id="footer-discord" class="footer-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36" width="18"><path fill="currentColor" d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg>
+          Discord
+        </a>
+        <a href="#" id="footer-tiktok" class="footer-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18"><path fill="currentColor" d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.27 8.27 0 004.84 1.56V6.78a4.85 4.85 0 01-1.07-.09z"/></svg>
+          TikTok
+        </a>
+      </div>
+      <p class="footer-copy" id="footer-copy">© 2025 — All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="javascript.js"></script>
+</body>
+</html>
