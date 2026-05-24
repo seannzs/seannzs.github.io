@@ -1,26 +1,26 @@
 {
   "profile": {
-    "serverName": "Neon Void",
-    "tagline": "Where legends are made in the dark",
+    "serverName": "Echo Lounge",
+    "tagline": "PlayAndChill",
     "description": "Komunitas gaming & creative terbesar. Tempat berkumpulnya para gamer, desainer, dan kreator konten yang ingin bertumbuh bersama. Bergabunglah dan jadilah bagian dari sesuatu yang luar biasa.",
     "avatarUrl": "https://api.dicebear.com/7.x/bottts/svg?seed=NeonVoid&backgroundColor=0f0f1a",
     "bannerColor": "#7c3aed",
     "accentColor": "#a855f7",
-    "memberCount": "12,400+",
-    "onlineCount": "3,200+",
+    "memberCount": "580+",
+    "onlineCount": "100+",
     "category": "Gaming & Creative"
   },
   "stats": [
-    { "label": "Members", "value": "12,400+", "icon": "👥" },
-    { "label": "Online Now", "value": "3,200+", "icon": "🟢" },
+    { "label": "Members", "value": "580+", "icon": "👥" },
+    { "label": "Online Now", "value": "100+", "icon": "🟢" },
     { "label": "Channels", "value": "80+", "icon": "💬" },
-    { "label": "Events/Month", "value": "50+", "icon": "🎉" }
+    { "label": "Roles", "value": "50+", "icon": "❇️" }
   ],
   "features": [
     {
       "icon": "🎮",
       "title": "Gaming Events",
-      "description": "Turnamen mingguan, scrimmage, dan event gaming seru bareng member lainnya."
+      "description": "Cari teman mabar, scrimmage, dan event gaming seru bareng member lainnya."
     },
     {
       "icon": "🎨",
@@ -35,7 +35,7 @@
     {
       "icon": "🎵",
       "title": "Music & Chill",
-      "description": "Channel musik 24/7, bot musik premium, dan voice lounge eksklusif."
+      "description": "Channel musik 24/7, bot musik, dan voice lounge eksklusif."
     },
     {
       "icon": "📚",
@@ -44,16 +44,16 @@
     },
     {
       "icon": "⭐",
-      "title": "VIP Rewards",
+      "title": "level Rewards",
       "description": "Sistem leveling & reward eksklusif untuk member aktif dan setia."
     }
   ],
   "links": {
-    "discord": "https://discord.gg/your-invite-code",
-    "tiktok": "https://www.tiktok.com/@yourusername"
+    "discord": "https://discord.gg/jRkcCFdT4T",
+    "tiktok": "https://www.tiktok.com/@echo.lounge"
   },
   "seo": {
-    "title": "Neon Void — Discord Community",
+    "title": "Echo Lounge — Discord Community",
     "description": "Komunitas gaming & creative terbesar. Bergabunglah sekarang!",
     "themeColor": "#0a0a12"
   }
